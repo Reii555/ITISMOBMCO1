@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#0F1720"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/wormboxdTitleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="WormBoxd"
+        android:fontFamily="@font/dmseriftext_regular"
+        android:textColor="#D9E9F7"
+        android:textSize="40sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/loginTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:text="Login"
+        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/usernameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Username"
+        android:padding="5dp"
+        android:textSize="15sp"
+        android:inputType="text"
+        />
+
+</LinearLayout>
