@@ -8,31 +8,21 @@
     android:orientation="vertical"
     android:gravity="center"
     android:background="#0F1720"
-    tools:context=".MainActivity">
+    tools:context=".Registration">
 
     <TextView
-        android:id="@+id/wormboxdTitleTv"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/dmseriftext_regular"
-        android:text="WormBoxd"
-        android:textColor="#D9E9F7"
-        android:textSize="50sp"
-        android:textStyle="bold" />
-
-    <!-- <TextView
-        android:id="@+id/loginTv"
+        android:id="@+id/signUpTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Login"
+        android:text="Sign Up"
         android:textStyle="bold"
         android:fontFamily="@font/inter_variablefont_opsz_wght"
         android:textColor="#D9E9F7"
-        android:textSize="20sp"/> -->
+        android:textSize="35sp"/>
 
     <TextView
-        android:id="@+id/usernameTv"
+        android:id="@+id/usernameSUTv"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Username"
@@ -43,7 +33,18 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/passwordTv"
+        android:id="@+id/emailSUTv"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="Email Address"
+        android:inputType="text"
+        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:padding="5dp"
+        android:textColorHint="#D9E9F7"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/passwordSUTv"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Password"
@@ -54,25 +55,25 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/registrationTv"
+        android:id="@+id/confirmPasswordSUTv"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:text="Don't have an account? Sign up here."
+        android:hint="Confirm Password"
         android:fontFamily="@font/inter_variablefont_opsz_wght"
-        android:textColor="#D9E9F7"
-        android:textSize="10sp" />
+        android:inputType="text"
+        android:padding="5dp"
+        android:textColorHint="#D9E9F7"
+        android:textSize="20sp" />
 
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/signUpBtn"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:padding="10dp"
-        android:text="Login"
+        android:text="Sign Up"
         android:fontFamily="@font/inter_variablefont_opsz_wght"
         android:textColor="#1F2933"
         android:textSize="15sp"
         android:backgroundTint="#F7F8FA"/>
-
 
 </LinearLayout>
