@@ -32,6 +32,7 @@ android {
 }
 
 dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:35.0.0"))
     implementation(libs.activity.ktx)
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
@@ -39,4 +40,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)
+    implementation("com.google.firebase:firebase-auth")
 }
