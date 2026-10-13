@@ -7,6 +7,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -20,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
 
     TextView registrationTv;
 
+    Button loginBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +34,24 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        loginBtn = findViewById(R.id.loginBtn);
+
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+
         registrationTv = findViewById(R.id.registrationTv);
 
         String fullText = "Don't have an account? Sign up here.";
         SpannableString spannableString = new SpannableString(fullText);
 
-        // 2. Create the click behavior for "Sign up"
+
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
