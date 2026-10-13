@@ -36,7 +36,6 @@ public class RegistrationActivity extends AppCompatActivity {
         String fullText = "Already have an account? Log In here.";
         SpannableString spannableString = new SpannableString(fullText);
 
-        // 2. Create the click behavior for "Sign up"
         ClickableSpan clickableSpan = new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
