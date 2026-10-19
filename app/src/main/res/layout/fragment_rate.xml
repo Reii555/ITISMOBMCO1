@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment"
+    android:orientation="vertical"
+    android:background="#0F1720">
+
+    <!-- back button -->
+    <Button
+        android:layout_width="55dp"
+        android:layout_height="39dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:text="<"
+        android:textSize="20dp" />
+
+    <!-- book info + book pic-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="209dp"
+        android:orientation="horizontal"
+        android:padding="20dp">
+
+        <!-- book info row -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bookTitleTv"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:text="Omniscient Reader's Viewpoint, Vol. 1 (Engish)"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/publishDateTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:text="July 22, 2025"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/bookAuthorTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SingNsong"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <!-- book pic row-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="183dp"
+            android:paddingLeft="60dp"
+            tools:src="@drawable/orv1" />
+
+    </LinearLayout>
+
+    <!-- summary text -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Summary:"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:paddingLeft="30dp"/>
+
+    <TextView
+        android:id="@+id/bookSummaryTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:paddingTop="5dp"
+        android:text="nameet ni bakla yung idol niya na nasa closet pa"
+        android:textColor="@color/white"/>
+
+    <!-- visual divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#2A3748" />
+
+    <!-- star rating -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="30dp"
+        android:text="Rate"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:numStars="5"
+        android:progressTint="#FFD700"
+        android:rating="0"
+        android:stepSize="1" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="#2A3748" />
+
+    <!-- review writing -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Write Review"
+        android:textColor="@color/white"
+        android:layout_marginStart="30dp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/reviewEt"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_edit_text"
+        android:gravity="top|start"
+        android:inputType="textMultiLine"
+        android:padding="12dp"
+        android:textColor="@color/white"
+        android:textColorHint="#64748B"
+        android:textSize="14sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/cancelReviewBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:backgroundTint="#1E2C3A"
+            android:text="Cancel"
+            android:textColor="@color/white"
+            app:cornerRadius="8dp"
+            app:strokeColor="#2A3748"
+            app:strokeWidth="1dp" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/submitReviewBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="#2A3A4E"
+            android:text="Submit"
+            android:textColor="@color/white"
+            app:cornerRadius="8dp"
+            app:strokeColor="#3B4D63"
+            app:strokeWidth="1dp" />
+
+    </LinearLayout>
+
+</LinearLayout>
