@@ -16,12 +16,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView registrationTv;
 
     Button loginBtn;
+
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,15 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        mAuth = FirebaseAuth.getInstance();
+
+        if (BuildConfig.DEBUG) {
+            // IMPORTANT Set a FIREBASE_EMULATOR_HOST=[ip_address] in local.properties to make the emulator work
+            // RUN firebase emulators:start in terminal to test firebase
+            String host = BuildConfig.EMULATOR_HOST;
+            mAuth.useEmulator(host, 9099);
+        }
+
         loginBtn = findViewById(R.id.loginBtn);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
-
 
         registrationTv = findViewById(R.id.registrationTv);
 
@@ -69,5 +81,16 @@ public class MainActivity extends AppCompatActivity {
         registrationTv.setText(spannableString);
         registrationTv.setMovementMethod(LinkMovementMethod.getInstance());
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }
