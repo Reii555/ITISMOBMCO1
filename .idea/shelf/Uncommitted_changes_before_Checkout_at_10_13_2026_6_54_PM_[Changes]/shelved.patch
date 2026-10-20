@@ -1,0 +1,24 @@
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:id=\"@+id/main\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    android:gravity=\"center\"\r\n    android:background=\"#0F1720\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/wormboxdTitleTv\"\r\n        android:layout_width=\"250dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:fontFamily=\"@font/dmseriftext_regular\"\r\n        android:text=\"WormBoxd\"\r\n        android:textColor=\"#D9E9F7\"\r\n        android:textSize=\"50sp\"\r\n        android:textStyle=\"bold\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/usernameTv\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:hint=\"Username\"\r\n        android:inputType=\"text\"\r\n        android:fontFamily=\"@font/inter_variablefont_opsz_wght\"\r\n        android:padding=\"5dp\"\r\n        android:textColorHint=\"#D9E9F7\"\r\n        android:textSize=\"20sp\" />\r\n\r\n    <EditText\r\n        android:id=\"@+id/passwordTv\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:hint=\"Password\"\r\n        android:fontFamily=\"@font/inter_variablefont_opsz_wght\"\r\n        android:inputType=\"text\"\r\n        android:padding=\"5dp\"\r\n        android:textColorHint=\"#D9E9F7\"\r\n        android:textSize=\"20sp\" />\r\n\r\n    <TextView\r\n        android:id=\"@+id/registrationTv\"\r\n        android:layout_width=\"200dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:padding=\"5dp\"\r\n        android:text=\"Don't have an account? Sign up here.\"\r\n        android:fontFamily=\"@font/inter_variablefont_opsz_wght\"\r\n        android:textColor=\"#D9E9F7\"\r\n        android:textSize=\"10sp\" />\r\n\r\n    <Button\r\n        android:id=\"@+id/loginBtn\"\r\n        android:layout_width=\"100dp\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:padding=\"10dp\"\r\n        android:text=\"Login\"\r\n        android:fontFamily=\"@font/inter_variablefont_opsz_wght\"\r\n        android:textColor=\"#1F2933\"\r\n        android:textSize=\"15sp\"\r\n        android:backgroundTint=\"#F7F8FA\"/>\r\n\r\n\r\n</LinearLayout>
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 6331a2e285fcf3b876a737bebacb44a1d77f63c7)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1791888518624)
+@@ -29,6 +29,7 @@
+         android:fontFamily="@font/inter_variablefont_opsz_wght"
+         android:padding="5dp"
+         android:textColorHint="#D9E9F7"
++        android:textColor="#D9E9F7"
+         android:textSize="20sp" />
+ 
+     <EditText
+@@ -40,6 +41,7 @@
+         android:inputType="text"
+         android:padding="5dp"
+         android:textColorHint="#D9E9F7"
++        android:textColor="#D9E9F7"
+         android:textSize="20sp" />
+ 
+     <TextView
