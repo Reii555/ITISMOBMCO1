@@ -9,6 +9,16 @@
     android:orientation="vertical"
     android:background="#0F1720">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Wormboxd"
+        android:textSize="36sp"
+        android:textColor="#D9E9F7"
+        android:fontFamily="@font/dmseriftext_regular"
+        android:textAlignment="center"
+        android:layout_marginTop="32dp"/>
+
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/homeFragment"
         android:layout_width="match_parent"
