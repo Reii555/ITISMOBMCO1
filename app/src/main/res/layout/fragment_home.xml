@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".HomeFragment"
     android:orientation="vertical"
-    android:background="#243B53"
+    android:background="#0F1720"
     android:paddingTop="80dp">
 
     <TextView
@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:text="Wormboxd"
         android:textAlignment="center"
-        android:textColor="#F7F8FA"
+        android:textColor="#D9E9F7"
         android:textSize="42sp"
         android:textStyle="bold"
-        android:fontFamily="serif"
+        android:fontFamily="@font/dmseriftext_regular"
         android:layout_marginBottom="40dp" />
 
     <LinearLayout
@@ -42,6 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Books"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"
                 android:textColor="#F7F8FA"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -72,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Reviews"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"
                 android:textColor="#5B7C99"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -102,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Lists"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"
                 android:textColor="#5B7C99"
                 android:textSize="16sp"
                 android:textStyle="bold"
