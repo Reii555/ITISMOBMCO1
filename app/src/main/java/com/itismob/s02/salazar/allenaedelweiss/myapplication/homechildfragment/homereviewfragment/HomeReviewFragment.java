@@ -65,7 +65,7 @@ public class HomeReviewFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyReviewRecyclerViewAdapter(PlaceholderContent.ITEMS));
+            // recyclerView.setAdapter(new MyReviewRecyclerViewAdapter(PlaceholderContent.ITEMS));
         }
         return view;
     }

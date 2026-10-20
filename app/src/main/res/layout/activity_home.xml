@@ -6,47 +6,67 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#0F1720">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/homeFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#182330"
+        android:padding="24dp"
+        android:elevation="8dp" >
 
         <ImageButton
             android:id="@+id/homeNavBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_zoom"
-            android:layout_weight="1"/>
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="18dp"
+            android:src="@drawable/home_nav_icon"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:contentDescription="Home" />
 
         <ImageButton
             android:id="@+id/searchNavBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_search"
-            android:layout_weight="1"/>
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="18dp"
+            android:src="@drawable/search_nav_icon"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:contentDescription="Search" />
 
         <ImageButton
             android:id="@+id/addNavBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_add"
-            android:layout_weight="1"/>
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="18dp"
+            android:src="@drawable/add_nav_icon"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:contentDescription="Add" />
 
         <ImageButton
             android:id="@+id/profileNavBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_manage"
-            android:layout_weight="1"/>
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginHorizontal="18dp"
+            android:src="@drawable/profile_nav_icon"
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:contentDescription="Profile" />
 
 
     </LinearLayout>
