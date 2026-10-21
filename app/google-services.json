@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1037074135727",
+    "project_id": "wormboxd",
+    "storage_bucket": "wormboxd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037074135727:android:27232aec6a82117451725a",
+        "android_client_info": {
+          "package_name": "com.itismob.s02.salazar.allenaedelweiss.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwQFNl8c5pkLBtuzotZQc-1qSzXuL8bUY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

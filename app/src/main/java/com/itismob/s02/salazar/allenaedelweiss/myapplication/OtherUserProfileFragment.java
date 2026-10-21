@@ -1,5 +1,12 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
+
 public class OtherUserProfileFragment extends Fragment {
    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -10,9 +17,9 @@ public class OtherUserProfileFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SearchFragment() {
-        // Required empty public constructor
-    }
+//    public SearchFragment() {
+//        // Required empty public constructor
+//    }
 
     /**
      * Use this factory method to create a new instance of
