@@ -13,23 +13,17 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:fontFamily="@font/dmseriftext_regular"
-        android:layout_margin="28dp"/>
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginVertical="18dp"/>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <!-- continue reading -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/continueReadingActivityRecyclerView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="28dp">
-
-        <!-- continue reading -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recentActivityRecyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:clipToPadding="false" />
-
-    </LinearLayout>
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:layout_marginLeft="28dp"/>
 
     <View
         android:layout_width="match_parent"
@@ -45,6 +39,16 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:fontFamily="@font/dmseriftext_regular"
-        android:layout_margin="28dp"/>
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginVertical="18dp"/>
+
+    <!-- recent reviews -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recentReviewsActivityRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:layout_marginLeft="28dp" />
 
 </LinearLayout>
