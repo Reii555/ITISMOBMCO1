@@ -1,5 +1,6 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,13 +14,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +30,11 @@ public class SearchFragment extends Fragment {
     private LinearLayout optionGenre;
     private LinearLayout optionMostPopular;
     private LinearLayout optionHighestRated;
-    private List<Book> allBooks = new ArrayList<>();
+    private LinearLayout browseSectionContainer;
+    private RecyclerView rvSearchResults;
+    private SearchAdapter searchAdapter;
+
+    private final List<Book> allBooks = new ArrayList<>();
 
     public SearchFragment() {
         // Required empty public constructor
@@ -47,6 +49,7 @@ public class SearchFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        allBooks.clear();
         allBooks.addAll(BookDataGenerator.getRecentActivityBooks());
         allBooks.addAll(BookDataGenerator.getContinueReadingBooks());
 
@@ -55,9 +58,15 @@ public class SearchFragment extends Fragment {
         optionGenre = view.findViewById(R.id.optionGenre);
         optionMostPopular = view.findViewById(R.id.optionMostPopular);
         optionHighestRated = view.findViewById(R.id.optionHighestRated);
+        browseSectionContainer = view.findViewById(R.id.sectionContainerBrowse);
+        rvSearchResults = view.findViewById(R.id.searchResultsRV);
+
+        searchAdapter = new SearchAdapter(new ArrayList<>());
+        rvSearchResults.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvSearchResults.setAdapter(searchAdapter);
 
         searchInputET.setOnEditorActionListener((v, actionId, event) -> {
-            if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String query = searchInputET.getText().toString().trim();
                 performSearch(query);
                 return true;
@@ -68,6 +77,7 @@ public class SearchFragment extends Fragment {
         searchInputET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 filterResults(s.toString());
@@ -83,60 +93,105 @@ public class SearchFragment extends Fragment {
         optionHighestRated.setOnClickListener(v -> handleBrowseCategory("Highest rated"));
     }
 
-    private void performSearch(String query){
-        if(query.isEmpty()){
+    private void performSearch(String query) {
+        if (query.isEmpty()) {
             Toast.makeText(getContext(), "Please enter a search term", Toast.LENGTH_SHORT).show();
             return;
         }
+        filterResults(query);
+    }
 
-        List<Book> searchResults = new ArrayList<>();
-
-        for(Book book : allBooks){
-            if(book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-                book.getAuthor().toLowerCase().contains(query.toLowerCase()) ||
-                book.getDescription().toLowerCase().contains(query.toLowerCase())){
-                searchResults.add(book);
-            }
-        }
-
-        if(searchResults.isEmpty()){
-            Toast.makeText(getContext(), "No results found for '" + query + "'", Toast.LENGTH_SHORT).show();
+    private void filterResults(String query) {
+        if (query.trim().isEmpty()) {
+            browseSectionContainer.setVisibility(View.VISIBLE);
+            rvSearchResults.setVisibility(View.GONE);
         } else {
-            Toast.makeText(getContext(), "Found " + searchResults.size() + " results for '" + query + "'", Toast.LENGTH_SHORT).show();
-        }
-    }
+            browseSectionContainer.setVisibility(View.GONE);
+            rvSearchResults.setVisibility(View.VISIBLE);
 
-    private void filterResults(String query){
-        if(query.trim().isEmpty()){
-            return;
-        }
-
-        List<Book> filteredBooks = new ArrayList<>();
-        for(Book book : allBooks){
-            if(book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
-            book.getAuthor().toLowerCase().contains(query.toLowerCase())){
-                filteredBooks.add(book);
+            List<Book> matchingBooks = new ArrayList<>();
+            for (Book book : allBooks) {
+                if (book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                    book.getAuthor().toLowerCase().contains(query.toLowerCase()) ||
+                    book.getDescription().toLowerCase().contains(query.toLowerCase()) ||
+                    book.getGenre().toLowerCase().contains(query.toLowerCase())) {
+                    matchingBooks.add(book);
+                }
             }
+            searchAdapter.updateData(matchingBooks);
         }
     }
 
-    private void handleBrowseCategory(String category){
-        Toast.makeText(getContext(), "Browsing by: " + category, Toast.LENGTH_SHORT).show();
-
-        List<Book> categoryBooks = new ArrayList<>(allBooks);
-        switch (category){
+    private void handleBrowseCategory(String category) {
+        switch (category) {
             case "Release date":
-                Collections.sort(categoryBooks, (b1, b2) -> Integer.compare(b2.getReleaseYear(), b1.getReleaseYear()));
+                showSortDialog("Select Release Order",
+                        new String[]{"Newest release first", "Oldest release first"},
+                        (dialog, which) -> {
+                            List<Book> sortedBooks = new ArrayList<>(allBooks);
+                            if (which == 0) { // Newest
+                                Collections.sort(sortedBooks, (b1, b2) -> Integer.compare(b2.getReleaseYear(), b1.getReleaseYear()));
+                            } else { // Oldest
+                                Collections.sort(sortedBooks, (b1, b2) -> Integer.compare(b1.getReleaseYear(), b2.getReleaseYear()));
+                            }
+                            displayCategoryResults(sortedBooks);
+                        });
                 break;
+
             case "Genre":
-                Collections.sort(categoryBooks, (b1, b2) -> b1.getGenre().compareToIgnoreCase(b2.getGenre()));
+                showSortDialog("Sort Genres",
+                        new String[]{"Alphabetical (A - Z)", "Reverse Alphabetical (Z - A)"},
+                        (dialog, which) -> {
+                            List<Book> sortedBooks = new ArrayList<>(allBooks);
+                            if (which == 0) { // A-Z
+                                Collections.sort(sortedBooks, (b1, b2) -> b1.getGenre().compareToIgnoreCase(b2.getGenre()));
+                            } else { // Z-A
+                                Collections.sort(sortedBooks, (b1, b2) -> b2.getGenre().compareToIgnoreCase(b1.getGenre()));
+                            }
+                            displayCategoryResults(sortedBooks);
+                        });
                 break;
+
             case "Most popular":
-                Collections.sort(categoryBooks, (b1, b2) -> Integer.compare(b2.getPopularity(), b1.getPopularity()));
+                showSortDialog("Select Popularity Order",
+                        new String[]{"Most popular first (Descending)", "Least popular first (Ascending)"},
+                        (dialog, which) -> {
+                            List<Book> sortedBooks = new ArrayList<>(allBooks);
+                            if (which == 0) { // High to Low
+                                Collections.sort(sortedBooks, (b1, b2) -> Integer.compare(b2.getPopularity(), b1.getPopularity()));
+                            } else { // Low to High
+                                Collections.sort(sortedBooks, (b1, b2) -> Integer.compare(b1.getPopularity(), b2.getPopularity()));
+                            }
+                            displayCategoryResults(sortedBooks);
+                        });
                 break;
+
             case "Highest rated":
-                Collections.sort(categoryBooks, (b1, b2) -> Float.compare(b2.getRating(), b1.getRating()));
+                showSortDialog("Select Rating Order",
+                        new String[]{"Highest rated first (Descending)", "Lowest rated first (Ascending)"},
+                        (dialog, which) -> {
+                            List<Book> sortedBooks = new ArrayList<>(allBooks);
+                            if (which == 0) { // High to Low
+                                Collections.sort(sortedBooks, (b1, b2) -> Float.compare(b2.getRating(), b1.getRating()));
+                            } else { // Low to High
+                                Collections.sort(sortedBooks, (b1, b2) -> Float.compare(b1.getRating(), b2.getRating()));
+                            }
+                            displayCategoryResults(sortedBooks);
+                        });
                 break;
         }
+    }
+
+    private void showSortDialog(String title, String[] options, DialogInterface.OnClickListener listener) {
+        new AlertDialog.Builder(requireContext())
+                .setTitle(title)
+                .setItems(options, listener)
+                .show();
+    }
+
+    private void displayCategoryResults(List<Book> books) {
+        browseSectionContainer.setVisibility(View.GONE);
+        rvSearchResults.setVisibility(View.VISIBLE);
+        searchAdapter.updateData(books);
     }
 }
