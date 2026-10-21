@@ -17,7 +17,7 @@
         android:padding="10dp"
         android:text="Sign Up"
         android:textStyle="bold"
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:fontFamily="@font/dmseriftext_regular"
         android:textColor="#D9E9F7"
         android:textSize="35sp"/>
 
@@ -27,7 +27,8 @@
         android:layout_height="wrap_content"
         android:hint="Username"
         android:inputType="text"
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:textColor="#D9E9F7"
+        android:fontFamily="@font/dmseriftext_regular"
         android:padding="5dp"
         android:textColorHint="#D9E9F7"
         android:textSize="20sp" />
@@ -38,7 +39,8 @@
         android:layout_height="wrap_content"
         android:hint="Email Address"
         android:inputType="text"
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:textColor="#D9E9F7"
+        android:fontFamily="@font/dmseriftext_regular"
         android:padding="5dp"
         android:textColorHint="#D9E9F7"
         android:textSize="20sp" />
@@ -48,8 +50,9 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Password"
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:fontFamily="@font/dmseriftext_regular"
         android:inputType="text"
+        android:textColor="#D9E9F7"
         android:padding="5dp"
         android:textColorHint="#D9E9F7"
         android:textSize="20sp" />
@@ -59,8 +62,9 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Confirm Password"
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:fontFamily="@font/dmseriftext_regular"
         android:inputType="text"
+        android:textColor="#D9E9F7"
         android:padding="5dp"
         android:textColorHint="#D9E9F7"
         android:textSize="20sp" />
@@ -71,7 +75,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="Already have an account? Log In here."
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:fontFamily="@font/dmseriftext_regular"
         android:textColor="#D9E9F7"
         android:textSize="10sp" />
 
@@ -81,7 +85,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Sign Up"
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:fontFamily="@font/dmseriftext_regular"
         android:textColor="#1F2933"
         android:textSize="15sp"
         android:backgroundTint="#F7F8FA"/>
