@@ -1,64 +1,133 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private EditText searchInputET;
+    private LinearLayout optionReleaseDate;
+    private LinearLayout optionGenre;
+    private LinearLayout optionMostPopular;
+    private LinearLayout optionHighestRated;
+    private List<Book> allBooks = new ArrayList<>();
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        allBooks.addAll(BookDataGenerator.getRecentActivityBooks());
+        allBooks.addAll(BookDataGenerator.getContinueReadingBooks());
+
+        searchInputET = view.findViewById(R.id.searchInputET);
+        optionReleaseDate = view.findViewById(R.id.optionReleaseDate);
+        optionGenre = view.findViewById(R.id.optionGenre);
+        optionMostPopular = view.findViewById(R.id.optionMostPopular);
+        optionHighestRated = view.findViewById(R.id.optionHighestRated);
+
+        searchInputET.setOnEditorActionListener((v, actionId, event) -> {
+            if(actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String query = searchInputET.getText().toString().trim();
+                performSearch(query);
+                return true;
+            }
+            return false;
+        });
+
+        searchInputET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterResults(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        optionReleaseDate.setOnClickListener(v -> handleBrowseCategory("Release date"));
+        optionGenre.setOnClickListener(v -> handleBrowseCategory("Genre"));
+        optionMostPopular.setOnClickListener(v -> handleBrowseCategory("Most popular"));
+        optionHighestRated.setOnClickListener(v -> handleBrowseCategory("Highest rated"));
+    }
+
+    private void performSearch(String query){
+        if(!query.isEmpty()){
+            Toast.makeText(getContext(), "Searching for: " + query, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        List<Book> searchResults = new ArrayList<>();
+
+        for(Book book : allBooks){
+            if(book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                book.getAuthor().toLowerCase().contains(query.toLowerCase()) ||
+                book.getDescription().toLowerCase().contains(query.toLowerCase())){
+                searchResults.add(book);
+            }
+        }
+
+        if(searchResults.isEmpty()){
+            Toast.makeText(getContext(), "No results found for '" + query + "'", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Found " + searchResults.size() + " results for '" + query + "'", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+    private void filterResults(String query){
+        if(!query.trim().isEmpty()){
+            return;
+        }
+
+        List<Book> filteredBooks = new ArrayList<>();
+        for(Book book : allBooks){
+            if(book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+            book.getAuthor().toLowerCase().contains(query.toLowerCase())){
+                filteredBooks.add(book);
+            }
+        }
+    }
+
+    private void handleBrowseCategory(String category){
+        Toast.makeText(getContext(), "Browsing by: " + category, Toast.LENGTH_SHORT).show();
+
+        List<Book> categoryBooks = new ArrayList<>(allBooks);
+        switch (category){
+            case "Release date":break;
+            case "Genre":break;
+            case "Most popular":break;
+            case "Highest rated":break;
+        }
     }
 }
