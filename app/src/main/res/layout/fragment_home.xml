@@ -4,41 +4,126 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#0F1720"
+    android:paddingTop="80dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Wormboxd"
-        android:textAlignment="center"/>
+        android:textAlignment="center"
+        android:textColor="#D9E9F7"
+        android:textSize="42sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/dmseriftext_regular"
+        android:layout_marginBottom="40dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="24dp">
 
-        <Button
-            android:layout_width="wrap_content"
+        <!-- books -->
+        <LinearLayout
+            android:id="@+id/tabBooks"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Books"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reviews"
-            android:layout_weight="1"/>
+            <TextView
+                android:id="@+id/tvBooks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Books"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"
+                android:textColor="#F7F8FA"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="12dp" />
 
-        <Button
-            android:layout_width="wrap_content"
+            <View
+                android:id="@+id/underlineBooks"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#F7F8FA"
+                android:visibility="visible" />
+        </LinearLayout>
+
+        <!-- reviews -->
+        <LinearLayout
+            android:id="@+id/tabReviews"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="List"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <TextView
+                android:id="@+id/tvReviews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reviews"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"
+                android:textColor="#5B7C99"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="15dp" />
+
+            <View
+                android:id="@+id/underlineReviews"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#F7F8FA"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+        <!-- lists -->
+        <LinearLayout
+            android:id="@+id/tabLists"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <TextView
+                android:id="@+id/tvLists"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lists"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"
+                android:textColor="#5B7C99"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:paddingBottom="15dp" />
+
+            <View
+                android:id="@+id/underlineLists"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#F7F8FA"
+                android:visibility="invisible" />
+        </LinearLayout>
+
     </LinearLayout>
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/homeChildFragment"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="1dp"
+        android:background="#334C66"
+        android:layout_marginHorizontal="24dp" />
 
 </LinearLayout>
