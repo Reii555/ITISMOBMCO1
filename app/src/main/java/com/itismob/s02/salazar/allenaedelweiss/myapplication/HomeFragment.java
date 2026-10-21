@@ -8,6 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homebookfragment.HomeBookFragment;
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homelistfragment.HomeListFragment;
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homereviewfragment.HomeReviewFragment;
+
 public class HomeFragment extends Fragment {
 
     private final int colorActive = Color.parseColor("#F7F8FA");
@@ -61,25 +65,34 @@ public class HomeFragment extends Fragment {
         underlineReviews.setVisibility(View.INVISIBLE);
         underlineLists.setVisibility(View.INVISIBLE);
 
+        Fragment childFragment = null;
+
         // set the selected tab to active state
         switch (activeTab) {
             case "Books":
                 tvBooks.setTextColor(colorActive);
                 underlineBooks.setVisibility(View.VISIBLE);
-                // lad books data here
+                childFragment = new HomeBookFragment();
                 break;
 
             case "Reviews":
                 tvReviews.setTextColor(colorActive);
                 underlineReviews.setVisibility(View.VISIBLE);
-                // load reviews data here
+                childFragment = new HomeReviewFragment();
                 break;
 
             case "Lists":
                 tvLists.setTextColor(colorActive);
                 underlineLists.setVisibility(View.VISIBLE);
-                // load lists data here
+                childFragment = new HomeListFragment();
                 break;
+        }
+
+        if (childFragment != null) {
+            getChildFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.homeChildFragment, childFragment)
+                    .commit();
         }
     }
 }

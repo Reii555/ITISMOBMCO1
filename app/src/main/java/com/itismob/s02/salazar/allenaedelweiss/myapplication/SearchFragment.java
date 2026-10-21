@@ -14,14 +14,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
@@ -83,8 +84,8 @@ public class SearchFragment extends Fragment {
     }
 
     private void performSearch(String query){
-        if(!query.isEmpty()){
-            Toast.makeText(getContext(), "Searching for: " + query, Toast.LENGTH_SHORT).show();
+        if(query.isEmpty()){
+            Toast.makeText(getContext(), "Please enter a search term", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -106,7 +107,7 @@ public class SearchFragment extends Fragment {
     }
 
     private void filterResults(String query){
-        if(!query.trim().isEmpty()){
+        if(query.trim().isEmpty()){
             return;
         }
 
@@ -124,10 +125,18 @@ public class SearchFragment extends Fragment {
 
         List<Book> categoryBooks = new ArrayList<>(allBooks);
         switch (category){
-            case "Release date":break;
-            case "Genre":break;
-            case "Most popular":break;
-            case "Highest rated":break;
+            case "Release date":
+                Collections.sort(categoryBooks, (b1, b2) -> Integer.compare(b2.getReleaseYear(), b1.getReleaseYear()));
+                break;
+            case "Genre":
+                Collections.sort(categoryBooks, (b1, b2) -> b1.getGenre().compareToIgnoreCase(b2.getGenre()));
+                break;
+            case "Most popular":
+                Collections.sort(categoryBooks, (b1, b2) -> Integer.compare(b2.getPopularity(), b1.getPopularity()));
+                break;
+            case "Highest rated":
+                Collections.sort(categoryBooks, (b1, b2) -> Float.compare(b2.getRating(), b1.getRating()));
+                break;
         }
     }
 }

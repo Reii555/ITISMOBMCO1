@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginEnd="12dp">
+
+    <FrameLayout
+        android:layout_width="90dp"
+        android:layout_height="130dp"
+        android:background="@drawable/bg_book_card"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/bookCoverIv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="Book Cover"
+            tools:src="@drawable/the_hunger_games" />
+
+    </FrameLayout>
+
+    <!-- Avatar + Rating row beneath book cover -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginTop="6dp">
+
+        <ImageView
+            android:id="@+id/friendAvatarIv"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/abyssaleblack"
+            android:contentDescription="Friend Avatar" />
+
+        <TextView
+            android:id="@+id/friendRatingTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="★★★★★"
+            android:textColor="#E2E8F0"
+            android:textSize="10sp"
+            tools:text="★★★★★" />
+
+    </LinearLayout>
+
+</LinearLayout>

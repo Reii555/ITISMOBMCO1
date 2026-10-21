@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginEnd="12dp">
+
+    <FrameLayout
+        android:layout_width="90dp"
+        android:layout_height="130dp"
+        android:background="@drawable/bg_book_card"
+        android:padding="2dp">
+
+        <ImageView
+            android:id="@+id/bookCoverIv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:contentDescription="Book Cover"
+            tools:src="@drawable/the_maze_runner" />
+
+    </FrameLayout>
+
+</LinearLayout>
