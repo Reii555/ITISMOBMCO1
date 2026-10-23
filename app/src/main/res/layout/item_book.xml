@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- this is d parang book layout for the thing u see in home or my activities -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:background="#0F1720">
+
+    <ImageView
+        android:id="@+id/bookCoverIV"
+        android:layout_width="95dp"
+        android:layout_height="130dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/the_maze_runner"
+        android:contentDescription="Book cover" />
+
+    <TextView
+        android:id="@+id/bookTitleTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="The Maze Runner"
+        android:fontFamily="@font/dmseriftext_regular"
+        android:textColor="#F1F5F9"
+        android:textSize="13sp"
+        android:maxLines="2"
+        android:ellipsize="end" />
+
+    <TextView
+        android:id="@+id/bookAuthorTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:text="James Dashner"
+        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:textColor="#9AAABD"
+        android:textSize="11sp"
+        android:maxLines="1"
+        android:ellipsize="end" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/star_rating"
+            android:contentDescription="Rating" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="3dp"
+            android:text="5.00"
+            android:textColor="#9AAABD"
+            android:textSize="11sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

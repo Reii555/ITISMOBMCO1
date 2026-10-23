@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ProfileProfileFragment extends Fragment {
 
@@ -23,6 +25,27 @@ public class ProfileProfileFragment extends Fragment {
                 R.layout.fragment_profile_profile,
                 container,
                 false
+        );
+    }
+
+    @Override
+    public void onViewCreated(
+            View view,
+            Bundle savedInstanceState) {
+
+        super.onViewCreated(view, savedInstanceState);
+
+        RecyclerView recentActivity =
+                view.findViewById(R.id.recentActivityRecyclerView);
+
+        recentActivity.setLayoutManager(
+                new GridLayoutManager(requireContext(), 4)
+        );
+
+        recentActivity.setAdapter(
+                new BookAdapter(
+                        BookDataGenerator.getRecentActivityBooks()
+                )
         );
     }
 }
