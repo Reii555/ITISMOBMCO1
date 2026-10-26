@@ -2,69 +2,98 @@ package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation; // If using Navigation Component
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class OtherUserProfileFragment extends Fragment {
 
     public OtherUserProfileFragment() {
-        super(R.layout.fragment_other_user_profile);
+        super(R.layout.fragment_otheruser_profile);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // 1. Handle Back Button
+        // handle back button
         ImageView btnBack = view.findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // If you are using Android Navigation Component, uncomment the line below:
-                // Navigation.findNavController(v).popBackStack();
-
-                // Otherwise, handle onBackPressed:
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> {
                 if (getActivity() != null) {
-                    getActivity().onBackPressed();
+                    getActivity().getOnBackPressedDispatcher().onBackPressed();
                 }
-            }
-        });
+            });
+        }
 
-        // 2. Handle Bottom Navigation Clicks (Example setup)
-        // Assuming you want to interact with the bottom icons, you'd assign IDs to them in XML.
-        // For example, if you add android:id="@+id/navSearch" to the search icon:
+        // bind views
+        TextView tvUsername = view.findViewById(R.id.tvUsername);
+        TextView tvDisplayName = view.findViewById(R.id.tvDisplayName);
+        ImageView ivProfilePic = view.findViewById(R.id.ivProfilePic);
+        Button btnFollow = view.findViewById(R.id.btnFollow);
 
-        /*
-        view.findViewById(R.id.navSearch).setOnClickListener(v -> {
-            // Navigate to Search
-            Toast.makeText(getContext(), "Go to Search", Toast.LENGTH_SHORT).show();
-        });
-        
-        view.findViewById(R.id.navProfile).setOnClickListener(v -> {
-             // Navigate to own profile
-            Toast.makeText(getContext(), "Go to My Profile", Toast.LENGTH_SHORT).show();
-        });
-        */
+        // placeholder profile data
+        String username = getArguments() != null
+                ? getArguments().getString("username", "otherusername")
+                : "otherusername";
+        String displayName = getArguments() != null
+                ? getArguments().getString("displayName", "Wormboxd")
+                : "Wormboxd";
 
-        // 3. Example of clicking the "Following" Button
-        // Assuming you add an ID to the Following TextView: android:id="@+id/btnFollowing"
-        /*
-        TextView btnFollowing = view.findViewById(R.id.btnFollowing);
-        btnFollowing.setOnClickListener(v -> {
-            // Toggle follow state
-            if (btnFollowing.getText().toString().equals("Following")) {
-                btnFollowing.setText("Follow");
-                // Change background/colors here
-            } else {
-                btnFollowing.setText("Following");
-                // Change background/colors here
-            }
-        });
-        */
+        if (tvUsername != null) tvUsername.setText("@" + username);
+        if (tvDisplayName != null) tvDisplayName.setText(displayName);
+
+        // follow button toggle
+        if (btnFollow != null) {
+            final boolean[] isFollowing = {false};
+            btnFollow.setOnClickListener(v -> {
+                isFollowing[0] = !isFollowing[0];
+                if (isFollowing[0]) {
+                    btnFollow.setText("Following");
+                    btnFollow.setBackgroundTintList(
+                            android.content.res.ColorStateList.valueOf(
+                                    android.graphics.Color.parseColor("#5B7C99")));
+                    Toast.makeText(getContext(), "Following " + username,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    btnFollow.setText("Follow");
+                    btnFollow.setBackgroundTintList(
+                            android.content.res.ColorStateList.valueOf(
+                                    android.graphics.Color.parseColor("#243B53")));
+                    Toast.makeText(getContext(), "Unfollowed " + username,
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        // recent activity recyclerView
+        RecyclerView recentActivityRv = view.findViewById(R.id.recentActivityRecyclerView);
+        if (recentActivityRv != null) {
+            recentActivityRv.setLayoutManager(
+                    new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            recentActivityRv.setAdapter(
+                    new MyBookRecyclerViewAdapter(
+                            com.itismob.s02.salazar.allenaedelweiss.myapplication
+                                    .homechildfragment.homebookfragment.placeholder
+                                    .PlaceholderContent.ITEMS));
+        }
+
+        // recent reviews recyclerView (comments)
+        RecyclerView commentsRv = view.findViewById(R.id.commentsRv);
+        if (commentsRv != null) {
+            commentsRv.setLayoutManager(new LinearLayoutManager(getContext()));
+            commentsRv.setAdapter(
+                    new MyReviewRecyclerViewAdapter(
+                            com.itismob.s02.salazar.allenaedelweiss.myapplication
+                                    .homechildfragment.homereviewfragment.placeholder
+                                    .PlaceholderContent.ITEMS));
+        }
     }
 }
