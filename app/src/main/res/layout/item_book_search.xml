@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingHorizontal="24dp"
+    android:paddingVertical="12dp"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:focusable="true">
+
+    <ImageView
+        android:id="@+id/bookCoverIv"
+        android:layout_width="60dp"
+        android:layout_height="90dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Book Cover"
+        tools:src="@drawable/the_maze_runner" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:orientation="vertical"
+        android:layout_gravity="center_vertical">
+
+        <TextView
+            android:id="@+id/bookTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#F7F8FA"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="The Maze Runner" />
+
+        <TextView
+            android:id="@+id/bookAuthorTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#A0A0A0"
+            android:textSize="14sp"
+            android:layout_marginTop="2dp"
+            tools:text="James Dashner" />
+
+        <TextView
+            android:id="@+id/bookDescriptionTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#718096"
+            android:textSize="12sp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:layout_marginTop="4dp"
+            tools:text="Thomas wakes up with no memory in the Glade..." />
+
+    </LinearLayout>
+
+</LinearLayout>

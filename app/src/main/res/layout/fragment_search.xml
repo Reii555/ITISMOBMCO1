@@ -9,18 +9,6 @@
     android:background="#0F1720"
     android:paddingTop="32dp">
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:fontFamily="@font/dmseriftext_regular"
-        android:text="Wormboxd"
-        android:textAlignment="center"
-        android:textColor="#D9E9F7"
-        android:textSize="42sp"
-        android:textStyle="bold" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,9 +35,11 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:src="@android:drawable/ic_menu_search"
-            app:tint="#A0A0A0" />
+            app:tint="#A0A0A0"
+            android:contentDescription="Search Icon" />
 
         <EditText
+            android:id="@+id/searchInputET"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
@@ -70,125 +60,146 @@
         android:background="#334C66"
         android:layout_marginTop="24dp"/>
 
-    <!-- browse by section -->
-    <TextView
+    <!-- Search Results RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/searchResultsRV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Browse by"
-        android:textColor="#F7F8FA"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_marginHorizontal="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_book_search" />
 
-    <!-- list items -->
-    <!-- release date -->
+    <!-- browse by section container -->
     <LinearLayout
+        android:id="@+id/sectionContainerBrowse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="24dp"
-        android:paddingVertical="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground">
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Release date"
+            android:text="Browse by"
             android:textColor="#F7F8FA"
-            android:textSize="16sp"/>
-        <TextView
-            android:layout_width="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginHorizontal="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="16dp"/>
+
+        <!-- release date -->
+        <LinearLayout
+            android:id="@+id/optionReleaseDate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=">"
-            android:textColor="#A0A0A0"
-            android:textSize="18sp"/>
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Release date"
+                android:textColor="#F7F8FA"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=">"
+                android:textColor="#A0A0A0"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#334C66" android:layout_marginHorizontal="24dp"/>
+
+        <!-- genre -->
+        <LinearLayout
+            android:id="@+id/optionGenre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Genre"
+                android:textColor="#F7F8FA"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=">"
+                android:textColor="#A0A0A0"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#334C66" android:layout_marginHorizontal="24dp"/>
+
+        <!-- most popular -->
+        <LinearLayout
+            android:id="@+id/optionMostPopular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Most popular"
+                android:textColor="#F7F8FA"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=">"
+                android:textColor="#A0A0A0"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#334C66" android:layout_marginHorizontal="24dp"/>
+
+        <!-- highest rated -->
+        <LinearLayout
+            android:id="@+id/optionHighestRated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Highest rated"
+                android:textColor="#F7F8FA"
+                android:textSize="16sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=">"
+                android:textColor="#A0A0A0"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#334C66" android:layout_marginHorizontal="24dp"/>
+
     </LinearLayout>
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#334C66" android:layout_marginHorizontal="24dp"/>
-
-    <!-- genre -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="24dp"
-        android:paddingVertical="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Genre"
-            android:textColor="#F7F8FA"
-            android:textSize="16sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=">"
-            android:textColor="#A0A0A0"
-            android:textSize="18sp"/>
-    </LinearLayout>
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#334C66" android:layout_marginHorizontal="24dp"/>
-
-    <!-- most popular -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="24dp"
-        android:paddingVertical="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Most popular"
-            android:textColor="#F7F8FA"
-            android:textSize="16sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=">"
-            android:textColor="#A0A0A0"
-            android:textSize="18sp"/>
-    </LinearLayout>
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#334C66" android:layout_marginHorizontal="24dp"/>
-
-    <!-- highest rated -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="24dp"
-        android:paddingVertical="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:background="?attr/selectableItemBackground">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Highest rated"
-            android:textColor="#F7F8FA"
-            android:textSize="16sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=">"
-            android:textColor="#A0A0A0"
-            android:textSize="18sp"/>
-    </LinearLayout>
-    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#334C66" android:layout_marginHorizontal="24dp"/>
 
 </LinearLayout>

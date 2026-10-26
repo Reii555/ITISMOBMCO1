@@ -18,7 +18,20 @@
         android:text="WormBoxd"
         android:textColor="#D9E9F7"
         android:textSize="50sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/loginTv"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/dmseriftext_regular"
+        android:text="Login"
+        android:textAlignment="center"
+        android:textColor="#D9E9F7"
+        android:textSize="27sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="15dp"/>
 
     <EditText
         android:id="@+id/usernameTv"
@@ -26,7 +39,8 @@
         android:layout_height="wrap_content"
         android:hint="Username"
         android:inputType="text"
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:textColor="#D9E9F7"
+        android:fontFamily="@font/dmseriftext_regular"
         android:padding="5dp"
         android:textColorHint="#D9E9F7"
         android:textSize="20sp" />
@@ -36,8 +50,9 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:hint="Password"
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
-        android:inputType="text"
+        android:fontFamily="@font/dmseriftext_regular"
+        android:inputType="textPassword"
+        android:textColor="#D9E9F7"
         android:padding="5dp"
         android:textColorHint="#D9E9F7"
         android:textSize="20sp" />
@@ -48,7 +63,7 @@
         android:layout_height="wrap_content"
         android:padding="5dp"
         android:text="Don't have an account? Sign up here."
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:fontFamily="@font/dmseriftext_regular"
         android:textColor="#D9E9F7"
         android:textSize="10sp" />
 
@@ -58,7 +73,7 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Login"
-        android:fontFamily="@font/inter_variablefont_opsz_wght"
+        android:fontFamily="@font/dmseriftext_regular"
         android:textColor="#1F2933"
         android:textSize="15sp"
         android:backgroundTint="#F7F8FA"/>

@@ -1,72 +1,59 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homebookfragment;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.itismob.s02.salazar.allenaedelweiss.myapplication.R;
-import com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homebookfragment.placeholder.PlaceholderContent;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-/**
- * A fragment representing a list of Items.
- */
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.Book;
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.BookDataGenerator;
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.R;
+
+import java.util.List;
+
 public class HomeBookFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private RecyclerView rvPopular;
+    private RecyclerView rvFromFriends;
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public HomeBookFragment() {
+        // Required empty public constructor
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static HomeBookFragment newInstance(int columnCount) {
-        HomeBookFragment fragment = new HomeBookFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+    public static HomeBookFragment newInstance() {
+        return new HomeBookFragment();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_book_list, container, false);
+        return inflater.inflate(R.layout.fragment_home_book, container, false);
+    }
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyBookRecyclerViewAdapter(PlaceholderContent.ITEMS));
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        rvPopular = view.findViewById(R.id.rvPopular);
+        rvFromFriends = view.findViewById(R.id.rvFromFriends);
+
+        List<Book> popularBooks = BookDataGenerator.getRecentActivityBooks();
+        List<Book> friendsBooks = BookDataGenerator.getContinueReadingBooks();
+
+        if (rvPopular != null) {
+            rvPopular.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            rvPopular.setAdapter(new MyBookRecyclerViewAdapter(popularBooks, false));
         }
-        return view;
+
+        if (rvFromFriends != null) {
+            rvFromFriends.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            rvFromFriends.setAdapter(new MyBookRecyclerViewAdapter(friendsBooks, true));
+        }
     }
 }

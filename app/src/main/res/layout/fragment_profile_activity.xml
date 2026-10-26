@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0F1720">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Continue Reading"
+        android:textColor="#D9E9F7"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/dmseriftext_regular"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginVertical="18dp"/>
+
+    <!-- continue reading -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/continueReadingActivityRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:layout_marginLeft="28dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#2B3A4A"
+        android:layout_marginTop="18dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Recent Reviews"
+        android:textColor="#D9E9F7"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/dmseriftext_regular"
+        android:layout_marginHorizontal="28dp"
+        android:layout_marginVertical="18dp"/>
+
+    <!-- recent reviews -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recentReviewsActivityRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp"
+        android:clipToPadding="false"
+        android:layout_marginLeft="28dp" />
+
+</LinearLayout>

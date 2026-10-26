@@ -35,10 +35,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
         homeBtn = findViewById(R.id.homeNavBtn);
-
         searchBtn = findViewById(R.id.searchNavBtn);
-
         profileBtn = findViewById(R.id.profileNavBtn);
+
+        // Load HomeFragment on initial creation
+        if (savedInstanceState == null) {
+            navigateFragment(new HomeFragment());
+        }
 
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override

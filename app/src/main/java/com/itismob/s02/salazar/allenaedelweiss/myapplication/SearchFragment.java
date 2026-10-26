@@ -1,64 +1,197 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class SearchFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private EditText searchInputET;
+    private LinearLayout optionReleaseDate;
+    private LinearLayout optionGenre;
+    private LinearLayout optionMostPopular;
+    private LinearLayout optionHighestRated;
+    private LinearLayout browseSectionContainer;
+    private RecyclerView rvSearchResults;
+    private SearchAdapter searchAdapter;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private final List<Book> allBooks = new ArrayList<>();
 
     public SearchFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SearchFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        allBooks.clear();
+        allBooks.addAll(BookDataGenerator.getRecentActivityBooks());
+        allBooks.addAll(BookDataGenerator.getContinueReadingBooks());
+
+        searchInputET = view.findViewById(R.id.searchInputET);
+        optionReleaseDate = view.findViewById(R.id.optionReleaseDate);
+        optionGenre = view.findViewById(R.id.optionGenre);
+        optionMostPopular = view.findViewById(R.id.optionMostPopular);
+        optionHighestRated = view.findViewById(R.id.optionHighestRated);
+        browseSectionContainer = view.findViewById(R.id.sectionContainerBrowse);
+        rvSearchResults = view.findViewById(R.id.searchResultsRV);
+
+        searchAdapter = new SearchAdapter(new ArrayList<>());
+        rvSearchResults.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvSearchResults.setAdapter(searchAdapter);
+
+        searchInputET.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                String query = searchInputET.getText().toString().trim();
+                performSearch(query);
+                return true;
+            }
+            return false;
+        });
+
+        searchInputET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterResults(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
+
+        optionReleaseDate.setOnClickListener(v -> handleBrowseCategory("Release date"));
+        optionGenre.setOnClickListener(v -> handleBrowseCategory("Genre"));
+        optionMostPopular.setOnClickListener(v -> handleBrowseCategory("Most popular"));
+        optionHighestRated.setOnClickListener(v -> handleBrowseCategory("Highest rated"));
+    }
+
+    private void performSearch(String query) {
+        if (query.isEmpty()) {
+            Toast.makeText(getContext(), "Please enter a search term", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        filterResults(query);
+    }
+
+    private void filterResults(String query) {
+        if (query.trim().isEmpty()) {
+            browseSectionContainer.setVisibility(View.VISIBLE);
+            rvSearchResults.setVisibility(View.GONE);
+        } else {
+            browseSectionContainer.setVisibility(View.GONE);
+            rvSearchResults.setVisibility(View.VISIBLE);
+
+            List<Book> matchingBooks = new ArrayList<>();
+            for (Book book : allBooks) {
+                if (book.getTitle().toLowerCase().contains(query.toLowerCase()) ||
+                    book.getAuthor().toLowerCase().contains(query.toLowerCase()) ||
+                    book.getDescription().toLowerCase().contains(query.toLowerCase()) ||
+                    book.getGenre().toLowerCase().contains(query.toLowerCase())) {
+                    matchingBooks.add(book);
+                }
+            }
+            searchAdapter.updateData(matchingBooks);
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+    private void handleBrowseCategory(String category) {
+        switch (category) {
+            case "Release date":
+                showSortDialog("Select Release Order",
+                        new String[]{"Newest release first", "Oldest release first"},
+                        (dialog, which) -> {
+                            List<Book> sortedBooks = new ArrayList<>(allBooks);
+                            if (which == 0) { // Newest
+                                Collections.sort(sortedBooks, (b1, b2) -> Integer.compare(b2.getReleaseYear(), b1.getReleaseYear()));
+                            } else { // Oldest
+                                Collections.sort(sortedBooks, (b1, b2) -> Integer.compare(b1.getReleaseYear(), b2.getReleaseYear()));
+                            }
+                            displayCategoryResults(sortedBooks);
+                        });
+                break;
+
+            case "Genre":
+                showSortDialog("Sort Genres",
+                        new String[]{"Alphabetical (A - Z)", "Reverse Alphabetical (Z - A)"},
+                        (dialog, which) -> {
+                            List<Book> sortedBooks = new ArrayList<>(allBooks);
+                            if (which == 0) { // A-Z
+                                Collections.sort(sortedBooks, (b1, b2) -> b1.getGenre().compareToIgnoreCase(b2.getGenre()));
+                            } else { // Z-A
+                                Collections.sort(sortedBooks, (b1, b2) -> b2.getGenre().compareToIgnoreCase(b1.getGenre()));
+                            }
+                            displayCategoryResults(sortedBooks);
+                        });
+                break;
+
+            case "Most popular":
+                showSortDialog("Select Popularity Order",
+                        new String[]{"Most popular first (Descending)", "Least popular first (Ascending)"},
+                        (dialog, which) -> {
+                            List<Book> sortedBooks = new ArrayList<>(allBooks);
+                            if (which == 0) { // High to Low
+                                Collections.sort(sortedBooks, (b1, b2) -> Integer.compare(b2.getPopularity(), b1.getPopularity()));
+                            } else { // Low to High
+                                Collections.sort(sortedBooks, (b1, b2) -> Integer.compare(b1.getPopularity(), b2.getPopularity()));
+                            }
+                            displayCategoryResults(sortedBooks);
+                        });
+                break;
+
+            case "Highest rated":
+                showSortDialog("Select Rating Order",
+                        new String[]{"Highest rated first (Descending)", "Lowest rated first (Ascending)"},
+                        (dialog, which) -> {
+                            List<Book> sortedBooks = new ArrayList<>(allBooks);
+                            if (which == 0) { // High to Low
+                                Collections.sort(sortedBooks, (b1, b2) -> Float.compare(b2.getRating(), b1.getRating()));
+                            } else { // Low to High
+                                Collections.sort(sortedBooks, (b1, b2) -> Float.compare(b1.getRating(), b2.getRating()));
+                            }
+                            displayCategoryResults(sortedBooks);
+                        });
+                break;
+        }
+    }
+
+    private void showSortDialog(String title, String[] options, DialogInterface.OnClickListener listener) {
+        new AlertDialog.Builder(requireContext())
+                .setTitle(title)
+                .setItems(options, listener)
+                .show();
+    }
+
+    private void displayCategoryResults(List<Book> books) {
+        browseSectionContainer.setVisibility(View.GONE);
+        rvSearchResults.setVisibility(View.VISIBLE);
+        searchAdapter.updateData(books);
     }
 }

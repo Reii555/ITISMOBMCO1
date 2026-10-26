@@ -126,4 +126,10 @@
         android:background="#334C66"
         android:layout_marginHorizontal="24dp" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/homeChildFragment"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
 </LinearLayout>
