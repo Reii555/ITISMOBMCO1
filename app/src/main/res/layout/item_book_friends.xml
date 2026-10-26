@@ -33,10 +33,10 @@
         <ImageView
             android:id="@+id/friendAvatarIv"
             android:layout_width="14dp"
-            android:layout_height="14dp"
+            android:layout_height="match_parent"
+            android:contentDescription="Friend Avatar"
             android:scaleType="centerCrop"
-            android:src="@drawable/abyssaleblack"
-            android:contentDescription="Friend Avatar" />
+            android:src="@drawable/otherpfp" />
 
         <TextView
             android:id="@+id/friendRatingTv"

@@ -12,15 +12,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="32dp"
         android:paddingBottom="32dp">
 
+        <!-- back button -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:src="@android:drawable/ic_media_previous"
+            app:tint="#D9E9F7" />
+
+        <!-- header -->
         <LinearLayout
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="vertical"
-            android:gravity="center">
+            android:paddingTop="8dp">
 
             <TextView
                 android:id="@+id/tvDisplayName"
@@ -28,17 +41,20 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/dmseriftext_regular"
                 android:text="Wormboxd"
+                android:paddingBottom="15dp"
                 android:textAlignment="center"
                 android:textColor="#D9E9F7"
                 android:textSize="42sp"
                 android:textStyle="bold" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/ivProfilePic"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
-                android:src="@drawable/profile_nav_icon"
-                android:contentDescription="Profile picture" />
+                android:contentDescription="Profile picture"
+                android:scaleType="centerCrop"
+                android:src="@drawable/otherpfp"
+                app:shapeAppearanceOverlay="@style/CircleImage" />
 
             <TextView
                 android:id="@+id/tvUsername"
@@ -54,12 +70,13 @@
                 android:id="@+id/btnFollow"
                 android:layout_width="150dp"
                 android:layout_height="45dp"
+                android:layout_marginTop="8dp"
                 android:backgroundTint="#243B53"
                 android:text="Follow"
                 android:textColor="#D9E9F7" />
-
         </LinearLayout>
 
+        <!-- recent activity -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -78,15 +95,18 @@
             android:textColor="#D9E9F7"
             android:textSize="13sp" />
 
+        <!-- ratings -->
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recentActivityRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingLeft="20dp"
             android:clipToPadding="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
-            tools:listitem="@layout/fragment_home_book" />
+            android:paddingLeft="20dp"
+            android:paddingEnd="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_book" />
 
         <View
             android:layout_width="match_parent"
@@ -106,6 +126,7 @@
             android:textColor="#D9E9F7"
             android:textSize="13sp" />
 
+        <!-- recent reviews -->
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -130,7 +151,7 @@
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_comment" />
+            tools:listitem="@layout/item_comment_otheruser" />
 
     </LinearLayout>
 

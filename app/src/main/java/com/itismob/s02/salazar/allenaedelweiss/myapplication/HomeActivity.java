@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
-    private void navigateFragment(Fragment fragment) {
+    void navigateFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

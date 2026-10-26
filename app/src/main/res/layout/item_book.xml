@@ -3,9 +3,10 @@
 <!-- this is d parang book layout for the thing u see in home or my activities -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="100dp"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:layout_marginEnd="12dp"
     android:layout_gravity="center_horizontal"
     android:background="#0F1720">
 
