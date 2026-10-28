@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="\@username"
             android:textColor="#D9E9F7"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:fontFamily="@font/inter_variablefont_opsz_wght"/>
 
@@ -43,22 +43,22 @@
         android:textStyle="bold"
         android:fontFamily="@font/dmseriftext_regular"
         android:layout_marginHorizontal="28dp"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="4dp"/>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginLeft="28dp">
+        android:orientation="horizontal">
 
         <!-- recent activity books -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recentActivityRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:padding="8dp"
-            android:clipToPadding="false" />
+            android:clipToPadding="false"
+            android:layout_marginLeft="18dp"/>
+
 
     </LinearLayout>
 

@@ -16,6 +16,7 @@ public class ProfileFragment extends Fragment {
 
     Button profileBtn, myActivityBtn;
     FragmentContainerView profileChildFragment;
+    View profileUnderline, myActivityUnderline;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -44,22 +45,33 @@ public class ProfileFragment extends Fragment {
         profileBtn = view.findViewById(R.id.profileBtn);
         myActivityBtn = view.findViewById(R.id.myActivityBtn);
 
+        profileUnderline = view.findViewById(R.id.profileUnderline);
+        myActivityUnderline = view.findViewById(R.id.myActivityUnderline);
+
         if (savedInstanceState == null) {
-            showFragment(new ProfileProfileFragment());
+            showFragment(new ProfileProfileFragment(), true);
         }
 
         profileBtn.setOnClickListener(v ->
-                showFragment(new ProfileProfileFragment()));
+                showFragment(new ProfileProfileFragment(), true));
 
         myActivityBtn.setOnClickListener(v ->
-                showFragment(new ProfileActivityFragment()));
+                showFragment(new ProfileActivityFragment(), false));
     }
 
-    private void showFragment(Fragment fragment) {
+    private void showFragment(Fragment fragment, boolean isProfile) {
         getChildFragmentManager()
                 .beginTransaction()
                 .replace(R.id.profileChildFragment, fragment)
                 .commit();
+
+        if (isProfile) {
+            profileUnderline.setVisibility(View.VISIBLE);
+            myActivityUnderline.setVisibility(View.INVISIBLE);
+        } else {
+            profileUnderline.setVisibility(View.INVISIBLE);
+            myActivityUnderline.setVisibility(View.VISIBLE);
+        }
     }
 
 }

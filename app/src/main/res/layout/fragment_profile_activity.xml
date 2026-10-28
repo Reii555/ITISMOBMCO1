@@ -14,7 +14,7 @@
         android:textStyle="bold"
         android:fontFamily="@font/dmseriftext_regular"
         android:layout_marginHorizontal="28dp"
-        android:layout_marginVertical="18dp"/>
+        android:layout_marginVertical="4dp"/>
 
     <!-- continue reading -->
     <androidx.recyclerview.widget.RecyclerView
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:padding="8dp"
         android:clipToPadding="false"
-        android:layout_marginLeft="28dp"/>
+        android:layout_marginLeft="18dp"/>
 
     <View
         android:layout_width="match_parent"
