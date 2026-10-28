@@ -14,12 +14,22 @@ import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
 
+    public interface OnBookClickListener {
+        void onBookClick(Book book);
+    }
+
     private final List<Book> books = new ArrayList<>();
+    private final OnBookClickListener listener;
 
     public SearchAdapter(List<Book> initialBooks) {
+        this(initialBooks, null);
+    }
+
+    public SearchAdapter(List<Book> initialBooks, OnBookClickListener listener) {
         if (initialBooks != null) {
             this.books.addAll(initialBooks);
         }
+        this.listener = listener;
     }
 
     public void updateData(List<Book> newBooks) {
@@ -48,6 +58,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
         if (book.getImageResId() != 0) {
             holder.bookCoverIv.setImageResource(book.getImageResId());
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onBookClick(book);
+            }
+        });
     }
 
     @Override

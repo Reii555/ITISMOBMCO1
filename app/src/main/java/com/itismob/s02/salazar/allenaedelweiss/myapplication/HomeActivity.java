@@ -17,9 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 public class HomeActivity extends AppCompatActivity {
 
     ImageButton homeBtn;
-
     ImageButton searchBtn;
-
+    ImageButton addBtn;
     ImageButton profileBtn;
 
     @Override
@@ -36,6 +35,7 @@ public class HomeActivity extends AppCompatActivity {
 
         homeBtn = findViewById(R.id.homeNavBtn);
         searchBtn = findViewById(R.id.searchNavBtn);
+        addBtn = findViewById(R.id.addNavBtn);
         profileBtn = findViewById(R.id.profileNavBtn);
 
         // Load HomeFragment on initial creation
@@ -51,6 +51,13 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navigateFragment(new SearchFragment());
+            }
+        });
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navigateFragment(new SearchFragment());
