@@ -10,6 +10,7 @@
 
     <!-- back button -->
     <Button
+        android:id="@+id/backBtn"
         android:layout_width="55dp"
         android:layout_height="39dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -56,6 +57,7 @@
 
         <!-- book pic row-->
         <ImageView
+            android:id="@+id/bookCoverIv"
             android:layout_width="wrap_content"
             android:layout_height="183dp"
             android:paddingLeft="60dp"
@@ -79,7 +81,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
-        android:text="nameet ni bakla yung idol niya na nasa closet pa"
+        android:text="yes"
         android:textColor="@color/white"/>
 
     <!-- visual divider -->

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileFragment"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#0F1720">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,27 +14,65 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="8dp">
 
-        <Button
-            android:id="@+id/profileBtn"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Profile"
-            android:textColor="#D9E9F7"
-            android:textSize="18sp"
-            android:fontFamily="@font/inter_variablefont_opsz_wght"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
 
-        <Button
-            android:id="@+id/myActivityBtn"
-            android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/profileBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textColor="#D9E9F7"
+                android:textSize="18sp"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+            <View
+                android:id="@+id/profileUnderline"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#F7F8FA"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="My Activity"
-            android:textColor="#D9E9F7"
-            android:textSize="18sp"
-            android:fontFamily="@font/inter_variablefont_opsz_wght"
             android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackgroundBorderless">
+
+            <Button
+                android:id="@+id/myActivityBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="My Activity"
+                android:textColor="#D9E9F7"
+                android:textSize="18sp"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"
+                android:layout_weight="1"
+                android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+            <View
+                android:id="@+id/myActivityUnderline"
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:background="#F7F8FA"
+                android:visibility="invisible" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -41,12 +80,13 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#2B3A4A"
-
         android:layout_marginBottom="28dp"/>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/profileChildFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
 
 </LinearLayout>

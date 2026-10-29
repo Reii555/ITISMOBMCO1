@@ -29,23 +29,19 @@ public class ProfileProfileFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(
-            View view,
-            Bundle savedInstanceState) {
-
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView recentActivity =
+        RecyclerView continueReading =
                 view.findViewById(R.id.recentActivityRecyclerView);
 
-        recentActivity.setLayoutManager(
+        continueReading.setLayoutManager(
                 new GridLayoutManager(requireContext(), 4)
         );
 
-        recentActivity.setAdapter(
-                new BookAdapter(
-                        BookDataGenerator.getRecentActivityBooks()
-                )
+        continueReading.setAdapter(
+                new BookAdapter(BookDataGenerator.getRecentActivityBooks())
         );
     }
+
 }

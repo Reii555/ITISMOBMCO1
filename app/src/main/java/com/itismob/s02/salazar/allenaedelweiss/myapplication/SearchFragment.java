@@ -61,7 +61,13 @@ public class SearchFragment extends Fragment {
         browseSectionContainer = view.findViewById(R.id.sectionContainerBrowse);
         rvSearchResults = view.findViewById(R.id.searchResultsRV);
 
-        searchAdapter = new SearchAdapter(new ArrayList<>());
+        searchAdapter = new SearchAdapter(new ArrayList<>(), book -> {
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.homeFragment, RateFragment.newInstance(book))
+                    .addToBackStack(null)
+                    .commit();
+        });
         rvSearchResults.setLayoutManager(new LinearLayoutManager(getContext()));
         rvSearchResults.setAdapter(searchAdapter);
 

@@ -15,6 +15,7 @@
 
         <!-- back button -->
         <Button
+            android:id="@+id/backBtn"
             android:layout_width="55dp"
             android:layout_height="39dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
