@@ -21,13 +21,11 @@ import java.util.List;
 
 public class OtherUserProfileFragment extends Fragment {
 
-    // recyclerview adapters
     private RecentActivityAdapter activityAdapter;
     private RecentReviewsAdapter reviewsAdapter;
 
-    // empty lists to hold data (will be populated later)
-    private final List<Book> recentBooks = new ArrayList<>();
-    private final List<Review> recentReviews = new ArrayList<>();
+    private List<Book> recentBooks = new ArrayList<>();
+    private List<Review> recentReviews = new ArrayList<>();
 
     public OtherUserProfileFragment() {
         super(R.layout.fragment_otheruser_profile);
@@ -68,30 +66,36 @@ public class OtherUserProfileFragment extends Fragment {
         // setup recyclerviews
         RecyclerView recentActivityRv = view.findViewById(R.id.recentActivityRecyclerView);
         recentActivityRv.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        activityAdapter = new RecentActivityAdapter(recentBooks);
+
+        // fetch data from generator
+        recentBooks = BookDataGenerator.getRecentActivityBooks();
+
+        // pass click listener to adapter
+        activityAdapter = new RecentActivityAdapter(recentBooks, book -> {
+            if (getActivity() instanceof HomeActivity) {
+                // navigate to fragment_rate
+                ((HomeActivity) getActivity()).navigateFragment(new RateFragment());
+            }
+        });
         recentActivityRv.setAdapter(activityAdapter);
 
+        // recent reviews
         RecyclerView commentsRv = view.findViewById(R.id.commentsRv);
         commentsRv.setLayoutManager(new LinearLayoutManager(getContext()));
-        reviewsAdapter = new RecentReviewsAdapter(recentReviews);
+
+        // pass click listener to adapter
+        reviewsAdapter = new RecentReviewsAdapter(recentReviews, review -> {
+            if (getActivity() instanceof HomeActivity) {
+                // navigate to fragment_review
+                ((HomeActivity) getActivity()).navigateFragment(new ReviewFragment());
+            }
+        });
         commentsRv.setAdapter(reviewsAdapter);
     }
 
     // =========================================================
     // data models
     // =========================================================
-    public static class Book {
-        public String title;
-        public String author;
-        public String rating;
-
-        public Book(String title, String author, String rating) {
-            this.title = title;
-            this.author = author;
-            this.rating = rating;
-        }
-    }
-
     public static class Review {
         public String username;
         public float rating;
@@ -107,26 +111,39 @@ public class OtherUserProfileFragment extends Fragment {
     }
 
     // =========================================================
+    // interfaces for clicks
+    // =========================================================
+    public interface OnBookClickListener {
+        void onBookClick(Book book);
+    }
+
+    public interface OnReviewClickListener {
+        void onReviewClick(Review review);
+    }
+
+    // =========================================================
     // adapters
     // =========================================================
+
+    // --- recent activity adapter ---
     static class RecentActivityAdapter extends RecyclerView.Adapter<RecentActivityAdapter.VH> {
         private final List<Book> data;
+        private final OnBookClickListener listener;
 
-        RecentActivityAdapter(List<Book> data) {
+        RecentActivityAdapter(List<Book> data, OnBookClickListener listener) {
             this.data = data;
+            this.listener = listener;
         }
 
         static class VH extends RecyclerView.ViewHolder {
             ImageView cover;
-            TextView title, author, rating;
+            TextView title, author;
 
             VH(@NonNull View v) {
                 super(v);
                 cover = v.findViewById(R.id.bookCoverIV);
                 title = v.findViewById(R.id.bookTitleTV);
                 author = v.findViewById(R.id.bookAuthorTV);
-                /* rating = v.findViewById(R.id.bookRatingTV);
-                * wait ko si rei */
             }
         }
 
@@ -141,9 +158,16 @@ public class OtherUserProfileFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull VH h, int pos) {
             Book item = data.get(pos);
-            h.title.setText(item.title);
-            h.author.setText(item.author);
-            h.rating.setText(item.rating);
+            h.title.setText(item.getTitle());
+            h.author.setText(item.getAuthor());
+            h.cover.setImageResource(item.getImageResId());
+
+            // handles click
+            h.itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onBookClick(item);
+                }
+            });
         }
 
         @Override
@@ -152,12 +176,14 @@ public class OtherUserProfileFragment extends Fragment {
         }
     }
 
-    // recent reviews adapter
+    // --- recent reviews adapter ---
     static class RecentReviewsAdapter extends RecyclerView.Adapter<RecentReviewsAdapter.VH> {
         private final List<Review> data;
+        private final OnReviewClickListener listener;
 
-        RecentReviewsAdapter(List<Review> data) {
+        RecentReviewsAdapter(List<Review> data, OnReviewClickListener listener) {
             this.data = data;
+            this.listener = listener;
         }
 
         static class VH extends RecyclerView.ViewHolder {
@@ -188,6 +214,13 @@ public class OtherUserProfileFragment extends Fragment {
             h.review.setText(item.comment);
             h.likeCount.setText(item.likeCount);
             h.rating.setRating(item.rating);
+
+            // handles click
+            h.itemView.setOnClickListener(v -> {
+                if (listener != null) {
+                    listener.onReviewClick(item);
+                }
+            });
         }
 
         @Override

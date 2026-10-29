@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_marginEnd="12dp">
 
@@ -30,13 +31,14 @@
         android:gravity="center_vertical"
         android:layout_marginTop="6dp">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/friendAvatarIv"
             android:layout_width="14dp"
             android:layout_height="match_parent"
             android:contentDescription="Friend Avatar"
             android:scaleType="centerCrop"
-            android:src="@drawable/otherpfp" />
+            android:src="@drawable/otherpfp"
+            app:shapeAppearanceOverlay="@style/CircleImage" />
 
         <TextView
             android:id="@+id/friendRatingTv"

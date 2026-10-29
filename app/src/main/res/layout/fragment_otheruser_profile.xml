@@ -96,35 +96,14 @@
             android:textSize="13sp" />
 
         <!-- ratings -->
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recentActivityRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingLeft="20dp"
             android:paddingEnd="20dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_book" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#334C66"
-            android:layout_marginHorizontal="24dp"
-            android:layout_marginTop="15dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="24dp"
-            android:layout_marginLeft="20dp"
-            android:fontFamily="@font/inter_variablefont_opsz_wght"
-            android:text="Ratings"
-            android:textColor="#D9E9F7"
-            android:textSize="13sp" />
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <!-- recent reviews -->
         <View
@@ -150,8 +129,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:nestedScrollingEnabled="false"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_comment_otheruser" />
+            android:paddingLeft="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
 

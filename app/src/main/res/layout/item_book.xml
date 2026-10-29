@@ -4,7 +4,7 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="8dp"
@@ -12,11 +12,11 @@
 
     <ImageView
         android:id="@+id/bookCoverIV"
-        android:layout_width="match_parent"
+        android:layout_width="88dp"
         android:layout_height="130dp"
+        android:contentDescription="Book cover"
         android:scaleType="centerCrop"
-        android:src="@drawable/the_maze_runner"
-        android:contentDescription="Book cover" />
+        android:src="@drawable/the_maze_runner" />
 
     <TextView
         android:id="@+id/bookTitleTV"
@@ -56,6 +56,7 @@
             android:contentDescription="Rating" />
 
         <TextView
+            android:id="@+id/bookRatingTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="3dp"

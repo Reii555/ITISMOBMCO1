@@ -8,6 +8,8 @@
     android:paddingTop="8dp"
     android:paddingBottom="8dp">
 
+    <!-- not using atm -->
+
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/commentUserAvatarIv"
         android:layout_width="50dp"

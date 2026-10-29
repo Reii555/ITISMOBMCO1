@@ -53,4 +53,5 @@ public class Book {
     public int getImageResId() {
         return imageResId;
     }
+
 }
