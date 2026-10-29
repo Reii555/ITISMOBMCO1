@@ -55,6 +55,13 @@ public class RegistrationActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
+        if (BuildConfig.DEBUG) {
+            // IMPORTANT Set a FIREBASE_EMULATOR_HOST=[ip_address] in local.properties to make the emulator work
+            // RUN firebase emulators:start in terminal to test firebase
+            String host = BuildConfig.EMULATOR_HOST;
+            mAuth.useEmulator(host, 9099);
+        }
+
         loginTv = findViewById(R.id.loginTv);
 
         signUpBtn = findViewById(R.id.signUpBtn);
@@ -123,6 +130,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                                 public void onComplete(@NonNull Task<Void> updateTask) {
                                                     if (updateTask.isSuccessful()) {
                                                         Toast.makeText(RegistrationActivity.this, "Registration Successful", Toast.LENGTH_SHORT).show();
+
+                                                        Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
                                                     } else {
                                                         Toast.makeText(RegistrationActivity.this, "Failed to save username: " + updateTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                                     }

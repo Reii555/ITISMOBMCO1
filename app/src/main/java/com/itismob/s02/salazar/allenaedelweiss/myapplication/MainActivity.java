@@ -8,7 +8,9 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,6 +18,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -24,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
     TextView registrationTv;
 
     Button loginBtn;
+
+    EditText emailTv;
+
+    EditText passwordTv;
 
     private FirebaseAuth mAuth;
 
@@ -47,14 +57,35 @@ public class MainActivity extends AppCompatActivity {
             mAuth.useEmulator(host, 9099);
         }
 
+        emailTv = findViewById(R.id.emailTv);
+        passwordTv = findViewById(R.id.passwordTv);
         loginBtn = findViewById(R.id.loginBtn);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                startActivity(intent);
-                finish();
+                String email = emailTv.getText().toString().trim();
+                String password = passwordTv.getText().toString().trim();
+
+                if (email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter email and password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(MainActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Login Failed: " + (task.getException() != null ? task.getException().getMessage() : ""), Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
         });
 
@@ -88,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, HomeActivity.class);
             startActivity(intent);
             finish();
         }
