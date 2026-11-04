@@ -1,13 +1,18 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileProfileFragment extends Fragment {
 
@@ -42,6 +47,33 @@ public class ProfileProfileFragment extends Fragment {
         continueReading.setAdapter(
                 new BookAdapter(BookDataGenerator.getRecentActivityBooks())
         );
+
+        // LOGOUT
+        Button logoutBtn = view.findViewById(R.id.logoutBtn);
+
+        logoutBtn.setOnClickListener(v -> {
+
+            // sign out
+            FirebaseAuth.getInstance().signOut();
+
+            Toast.makeText(requireContext(),
+                    "Logged out successfully!",
+                    Toast.LENGTH_SHORT).show();
+
+            // return to login
+            Intent intent = new Intent(
+                    requireActivity(),
+                    MainActivity.class
+            );
+
+            intent.setFlags(
+                    Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK
+            );
+
+            startActivity(intent);
+
+            requireActivity().finish();
+        });
     }
 
 }

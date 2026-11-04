@@ -50,12 +50,12 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        if (BuildConfig.DEBUG) {
+        //if (BuildConfig.DEBUG) {
             // IMPORTANT Set a FIREBASE_EMULATOR_HOST=[ip_address] in local.properties to make the emulator work
             // RUN firebase emulators:start in terminal to test firebase
-            String host = BuildConfig.EMULATOR_HOST;
-            mAuth.useEmulator(host, 9099);
-        }
+        //    String host = BuildConfig.EMULATOR_HOST;
+        //    mAuth.useEmulator(host, 9099);
+        //}
 
         emailTv = findViewById(R.id.emailTv);
         passwordTv = findViewById(R.id.passwordTv);

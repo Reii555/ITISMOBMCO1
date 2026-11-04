@@ -1,13 +1,18 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ProfileActivityFragment extends Fragment {
 
@@ -32,15 +37,17 @@ public class ProfileActivityFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView continueReading =
-                view.findViewById(R.id.continueReadingActivityRecyclerView);
+        RecyclerView continueReading = view.findViewById(R.id.continueReadingActivityRecyclerView);
 
-        continueReading.setLayoutManager(
-                new GridLayoutManager(requireContext(), 4)
-        );
+        RecyclerView recentReviews = view.findViewById(R.id.recentReviewsActivityRecyclerView);
 
-        continueReading.setAdapter(
-                new BookAdapter(BookDataGenerator.getContinueReadingBooks())
-        );
+        // CONT READING
+        continueReading.setLayoutManager(new GridLayoutManager(requireContext(), 4));
+        continueReading.setAdapter(new BookAdapter(BookDataGenerator.getContinueReadingBooks()));
+
+        // RECENT REVS
+        recentReviews.setLayoutManager(new GridLayoutManager(requireContext(), 1));
+        recentReviews.setAdapter(new ReviewAdapter(ReviewDataGenerator.getRecentReviews()));
+
     }
 }
