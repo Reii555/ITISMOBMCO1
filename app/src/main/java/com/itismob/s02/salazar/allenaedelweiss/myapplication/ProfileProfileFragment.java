@@ -37,16 +37,9 @@ public class ProfileProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView continueReading =
-                view.findViewById(R.id.recentActivityRecyclerView);
-
-        continueReading.setLayoutManager(
-                new GridLayoutManager(requireContext(), 4)
-        );
-
-        continueReading.setAdapter(
-                new BookAdapter(BookDataGenerator.getRecentActivityBooks())
-        );
+        RecyclerView continueReading = view.findViewById(R.id.recentActivityRecyclerView);
+        continueReading.setLayoutManager(new GridLayoutManager(requireContext(), 4));
+        continueReading.setAdapter(new BookAdapter(BookDataGenerator.getRecentActivityBooks()));
 
         // LOGOUT
         Button logoutBtn = view.findViewById(R.id.logoutBtn);

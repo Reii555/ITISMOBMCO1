@@ -2,12 +2,9 @@ package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
 public class Review {
 
-    private String date;
-    private String bookTitle;
+    private String date, bookTitle, content;
     private float rating;
-    private String content;
-    private int likes;
-    private int bookImage;
+    private int likes, bookImage;
 
     public Review(String date, String bookTitle, float rating, String content, int likes, int bookImage) {
         this.date = date;
