@@ -25,6 +25,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.util.concurrent.Executors;
+
 public class MainActivity extends AppCompatActivity {
 
     TextView registrationTv;
@@ -50,16 +54,20 @@ public class MainActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        //if (BuildConfig.DEBUG) {
-            // IMPORTANT Set a FIREBASE_EMULATOR_HOST=[ip_address] in local.properties to make the emulator work
-            // RUN firebase emulators:start in terminal to test firebase
-        //    String host = BuildConfig.EMULATOR_HOST;
-        //    mAuth.useEmulator(host, 9099);
-        //}
-
         emailTv = findViewById(R.id.emailTv);
         passwordTv = findViewById(R.id.passwordTv);
         loginBtn = findViewById(R.id.loginBtn);
+
+        // Disable login button temporarily while checking environment
+        loginBtn.setEnabled(false);
+
+        if (BuildConfig.DEBUG) {
+            detectAndSetEmulator();
+        } else {
+            loginBtn.setEnabled(true);
+            Toast.makeText(MainActivity.this, "Connected to Live Cloud", Toast.LENGTH_SHORT).show();
+            checkCurrentUser();
+        }
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,14 +122,48 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
+    private void detectAndSetEmulator() {
+        String host = BuildConfig.EMULATOR_HOST;
+
+        // Network operations must running on a background thread
+        Executors.newSingleThreadExecutor().execute(() -> {
+            boolean emulatorRunning = false;
+            try (Socket socket = new Socket()) {
+                // Try connecting to the Auth emulator port (9099) with a 1-second timeout
+                socket.connect(new InetSocketAddress(host, 9099), 1000);
+                emulatorRunning = true;
+            } catch (Exception e) {
+                // Connection failed; emulator is offline
+            }
+
+            final boolean finalEmulatorRunning = emulatorRunning;
+
+            // Return to main thread to update UI and Firebase state
+            runOnUiThread(() -> {
+                if (finalEmulatorRunning) {
+                    try {
+                        mAuth.useEmulator(host, 9099);
+                        Toast.makeText(MainActivity.this, "Connected to Local Emulator", Toast.LENGTH_SHORT).show();
+                    } catch (IllegalStateException e) {
+                        // useEmulator was already called previously
+                    }
+                } else {
+                    // Ping failed, falling back to live cloud
+                    Toast.makeText(MainActivity.this, "Connected to Live Cloud", Toast.LENGTH_SHORT).show();
+                }
+
+                loginBtn.setEnabled(true);
+                checkCurrentUser(); // Check for active session after environment is configured
+            });
+        });
+    }
+    private void checkCurrentUser() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            Intent intent = new Intent(this, HomeActivity.class);
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
         }
     }
+
 }

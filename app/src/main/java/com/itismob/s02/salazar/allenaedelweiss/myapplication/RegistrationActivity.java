@@ -26,6 +26,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
 
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.util.concurrent.Executors;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     TextView loginTv;
@@ -55,13 +59,6 @@ public class RegistrationActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        if (BuildConfig.DEBUG) {
-            // IMPORTANT Set a FIREBASE_EMULATOR_HOST=[ip_address] in local.properties to make the emulator work
-            // RUN firebase emulators:start in terminal to test firebase
-            String host = BuildConfig.EMULATOR_HOST;
-            mAuth.useEmulator(host, 9099);
-        }
-
         loginTv = findViewById(R.id.loginTv);
 
         signUpBtn = findViewById(R.id.signUpBtn);
@@ -73,6 +70,17 @@ public class RegistrationActivity extends AppCompatActivity {
         passwordSUTv = findViewById(R.id.passwordSUTv);
 
         confirmPasswordSUTv = findViewById(R.id.confirmPasswordSUTv);
+
+        // Disable sign-up button temporarily while checking environment
+        signUpBtn.setEnabled(false);
+
+        if (BuildConfig.DEBUG) {
+            detectAndSetEmulator();
+        } else {
+            // Automatically cloud if not in debug mode
+            signUpBtn.setEnabled(true);
+            Toast.makeText(RegistrationActivity.this, "Connected to Live Cloud", Toast.LENGTH_SHORT).show();
+        }
 
         String fullText = "Already have an account? Log In here.";
         SpannableString spannableString = new SpannableString(fullText);
@@ -147,5 +155,38 @@ public class RegistrationActivity extends AppCompatActivity {
             });
         });
 
+    }
+
+    private void detectAndSetEmulator() {
+        String host = BuildConfig.EMULATOR_HOST;
+
+        Executors.newSingleThreadExecutor().execute(() -> {
+            boolean emulatorRunning = false;
+            try (Socket socket = new Socket()) {
+                socket.connect(new InetSocketAddress(host, 9099), 1000);
+                emulatorRunning = true;
+            } catch (Exception e) {
+                // Connection failed; emulator is offline
+            }
+
+            final boolean finalEmulatorRunning = emulatorRunning;
+
+            runOnUiThread(() -> {
+                if (finalEmulatorRunning) {
+                    try {
+                        mAuth.useEmulator(host, 9099);
+                        Toast.makeText(RegistrationActivity.this, "Connected to Local Emulator", Toast.LENGTH_SHORT).show();
+                    } catch (IllegalStateException e) {
+                        // useEmulator was already called previously in MainActivity
+                        Toast.makeText(RegistrationActivity.this, "Connected to Local Emulator", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    // Ping failed, falling back to live cloud
+                    Toast.makeText(RegistrationActivity.this, "Connected to Live Cloud", Toast.LENGTH_SHORT).show();
+                }
+
+                signUpBtn.setEnabled(true);
+            });
+        });
     }
 }
