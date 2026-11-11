@@ -53,14 +53,14 @@ public class HomeActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateFragment(new SearchFragment());
+                navigateFragment(SearchFragment.newInstance(false));
             }
         });
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navigateFragment(new SearchFragment());
+                navigateFragment(SearchFragment.newInstance(true));
             }
         });
 

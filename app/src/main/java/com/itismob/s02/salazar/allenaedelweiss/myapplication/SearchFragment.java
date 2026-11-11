@@ -36,8 +36,26 @@ public class SearchFragment extends Fragment {
 
     private final List<Book> allBooks = new ArrayList<>();
 
+    private boolean isForRating = false;
+
     public SearchFragment() {
         // Required empty public constructor
+    }
+
+    public static SearchFragment newInstance(boolean isForRating) {
+        SearchFragment fragment = new SearchFragment();
+        Bundle args = new Bundle();
+        args.putBoolean("is_for_rating", isForRating);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            isForRating = getArguments().getBoolean("is_for_rating", false);
+        }
     }
 
     @Override
@@ -62,28 +80,35 @@ public class SearchFragment extends Fragment {
         rvSearchResults = view.findViewById(R.id.searchResultsRV);
 
         searchAdapter = new SearchAdapter(new ArrayList<>(), book -> {
+            if (isForRating) {
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.homeFragment, RateFragment.newInstance(book))
+                        .addToBackStack(null)
+                        .commit();
+            } else {
+                Bundle bundle = new Bundle();
 
-            Bundle bundle = new Bundle();
+                bundle.putString("title", book.getTitle());
+                bundle.putString("author", book.getAuthor());
+                bundle.putString("description", book.getDescription());
+                bundle.putString("genre", book.getGenre());
 
-            bundle.putString("title", book.getTitle());
-            bundle.putString("author", book.getAuthor());
-            bundle.putString("description", book.getDescription());
-            bundle.putString("genre", book.getGenre());
+                bundle.putInt("releaseYear", book.getReleaseYear());
+                bundle.putInt("popularity", book.getPopularity());
 
-            bundle.putInt("releaseYear", book.getReleaseYear());
-            bundle.putInt("popularity", book.getPopularity());
+                bundle.putFloat("rating", book.getRating());
+                bundle.putInt("imageResId", book.getImageResId());
 
-            bundle.putFloat("rating", book.getRating());
-            bundle.putInt("imageResId", book.getImageResId());
+                BookInformationFragment fragment = new BookInformationFragment();
+                fragment.setArguments(bundle);
 
-            BookInformationFragment fragment = new BookInformationFragment();
-            fragment.setArguments(bundle);
-
-            getParentFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.homeFragment, fragment)
-                    .addToBackStack(null)
-                    .commit();
+                getParentFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.homeFragment, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
         });
 
         rvSearchResults.setLayoutManager(new LinearLayoutManager(getContext()));
