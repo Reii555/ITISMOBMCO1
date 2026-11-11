@@ -62,12 +62,30 @@ public class SearchFragment extends Fragment {
         rvSearchResults = view.findViewById(R.id.searchResultsRV);
 
         searchAdapter = new SearchAdapter(new ArrayList<>(), book -> {
+
+            Bundle bundle = new Bundle();
+
+            bundle.putString("title", book.getTitle());
+            bundle.putString("author", book.getAuthor());
+            bundle.putString("description", book.getDescription());
+            bundle.putString("genre", book.getGenre());
+
+            bundle.putInt("releaseYear", book.getReleaseYear());
+            bundle.putInt("popularity", book.getPopularity());
+
+            bundle.putFloat("rating", book.getRating());
+            bundle.putInt("imageResId", book.getImageResId());
+
+            BookInformationFragment fragment = new BookInformationFragment();
+            fragment.setArguments(bundle);
+
             getParentFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.homeFragment, RateFragment.newInstance(book))
+                    .replace(R.id.homeFragment, fragment)
                     .addToBackStack(null)
                     .commit();
         });
+
         rvSearchResults.setLayoutManager(new LinearLayoutManager(getContext()));
         rvSearchResults.setAdapter(searchAdapter);
 
@@ -200,4 +218,6 @@ public class SearchFragment extends Fragment {
         rvSearchResults.setVisibility(View.VISIBLE);
         searchAdapter.updateData(books);
     }
+
+
 }

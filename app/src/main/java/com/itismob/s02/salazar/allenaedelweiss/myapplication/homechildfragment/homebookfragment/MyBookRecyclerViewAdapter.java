@@ -1,3 +1,4 @@
+
 package com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homebookfragment;
 
 import android.view.LayoutInflater;
@@ -18,40 +19,75 @@ public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecycl
 
     private final List<Book> books;
     private final boolean isFromFriends;
+    private final OnBookClickListener listener;
+
+    public interface OnBookClickListener {
+        void onBookClick(Book book);
+    }
 
     public MyBookRecyclerViewAdapter(List<Book> books) {
-        this(books, false);
+        this(books, false, null);
     }
 
     public MyBookRecyclerViewAdapter(List<Book> books, boolean isFromFriends) {
+        this(books, isFromFriends, null);
+    }
+
+    public MyBookRecyclerViewAdapter(
+            List<Book> books,
+            boolean isFromFriends,
+            OnBookClickListener listener) {
+
         this.books = books;
         this.isFromFriends = isFromFriends;
+        this.listener = listener;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        int layoutRes = isFromFriends ? R.layout.item_book_friends : R.layout.item_book_popular;
-        View view = LayoutInflater.from(parent.getContext()).inflate(layoutRes, parent, false);
+    public ViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent, int viewType) {
+
+        int layoutRes = isFromFriends
+                ? R.layout.item_book_friends
+                : R.layout.item_book_popular;
+
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(layoutRes, parent, false);
+
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
+    public void onBindViewHolder(
+            @NonNull final ViewHolder holder, int position) {
+
         Book book = books.get(position);
 
         if (book.getImageResId() != 0) {
-            holder.bookCoverIv.setImageResource(book.getImageResId());
+            holder.bookCoverIv.setImageResource(
+                    book.getImageResId());
         }
 
         if (isFromFriends && holder.friendRatingTv != null) {
+
             int stars = Math.round(book.getRating());
+
             StringBuilder sb = new StringBuilder();
+
             for (int i = 0; i < stars && i < 5; i++) {
                 sb.append("★");
             }
+
             holder.friendRatingTv.setText(sb.toString());
         }
+
+        // Book click listener
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onBookClick(book);
+            }
+        });
     }
 
     @Override
@@ -60,12 +96,14 @@ public class MyBookRecyclerViewAdapter extends RecyclerView.Adapter<MyBookRecycl
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
         public final ImageView bookCoverIv;
         public final ImageView friendAvatarIv;
         public final TextView friendRatingTv;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             bookCoverIv = itemView.findViewById(R.id.bookCoverIv);
             friendAvatarIv = itemView.findViewById(R.id.friendAvatarIv);
             friendRatingTv = itemView.findViewById(R.id.friendRatingTv);
