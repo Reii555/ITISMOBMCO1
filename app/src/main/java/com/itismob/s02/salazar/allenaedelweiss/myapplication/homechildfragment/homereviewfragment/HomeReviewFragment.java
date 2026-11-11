@@ -1,72 +1,75 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homereviewfragment;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.itismob.s02.salazar.allenaedelweiss.myapplication.R;
-import com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homereviewfragment.placeholder.PlaceholderContent;
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.Review;
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.ReviewDataGenerator;
 
-/**
- * A fragment representing a list of Items.
- */
+import java.util.List;
+
 public class HomeReviewFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 1;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
     public HomeReviewFragment() {
+        // Required empty public constructor
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static HomeReviewFragment newInstance(int columnCount) {
-        HomeReviewFragment fragment = new HomeReviewFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
+    public static HomeReviewFragment newInstance() {
+        return new HomeReviewFragment();
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home_review_list, container, false);
+        return inflater.inflate(R.layout.fragment_home_review, container, false);
+    }
 
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            // recyclerView.setAdapter(new MyReviewRecyclerViewAdapter(PlaceholderContent.ITEMS));
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        RecyclerView rvFriends = view.findViewById(R.id.homeReviewListFriendsRv);
+        RecyclerView rvPopular = view.findViewById(R.id.homeReviewListPopularRv);
+
+        List<Review> friendReviews = ReviewDataGenerator.getFriendsReviews();
+        List<Review> popularReviews = ReviewDataGenerator.getPopularReviews();
+
+        if (rvFriends != null) {
+            rvFriends.setLayoutManager(new LinearLayoutManager(getContext()));
+            rvFriends.setNestedScrollingEnabled(false);
+            rvFriends.setAdapter(new MyReviewRecyclerViewAdapter(friendReviews, R.layout.item_review_newfromfriends));
         }
-        return view;
+
+        if (rvPopular != null) {
+            rvPopular.setLayoutManager(new LinearLayoutManager(getContext()));
+            rvPopular.setNestedScrollingEnabled(false);
+            rvPopular.setAdapter(new MyReviewRecyclerViewAdapter(popularReviews, R.layout.item_review_popular));
+        }
+
+        NestedScrollView scrollView = view.findViewById(R.id.homeReviewScrollView);
+        View popularHeader = view.findViewById(R.id.popularThisWeekHeaderLayout);
+        TextView stickyHeaderTv = view.findViewById(R.id.stickyHeaderTv);
+
+        if (scrollView != null && popularHeader != null && stickyHeaderTv != null) {
+            scrollView.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+                int popularTop = popularHeader.getTop();
+                if (scrollY >= popularTop) {
+                    stickyHeaderTv.setText("Popular this week");
+                } else {
+                    stickyHeaderTv.setText("New from friends");
+                }
+            });
+        }
     }
 }

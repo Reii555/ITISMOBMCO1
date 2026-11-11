@@ -5,14 +5,22 @@ public class Review {
     private String date, bookTitle, content;
     private float rating;
     private int likes, bookImage;
+    private String friendName;
+    private int friendPfp;
 
     public Review(String date, String bookTitle, float rating, String content, int likes, int bookImage) {
+        this(date, bookTitle, rating, content, likes, bookImage, null, 0);
+    }
+
+    public Review(String date, String bookTitle, float rating, String content, int likes, int bookImage, String friendName, int friendPfp) {
         this.date = date;
         this.bookTitle = bookTitle;
         this.rating = rating;
         this.content = content;
         this.likes = likes;
         this.bookImage = bookImage;
+        this.friendName = friendName;
+        this.friendPfp = friendPfp;
     }
 
     public String getDate() {
@@ -37,5 +45,13 @@ public class Review {
 
     public int getBookImage() {
         return bookImage;
+    }
+
+    public String getFriendName() {
+        return friendName;
+    }
+
+    public int getFriendPfp() {
+        return friendPfp;
     }
 }

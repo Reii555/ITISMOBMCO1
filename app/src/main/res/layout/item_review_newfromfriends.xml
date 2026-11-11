@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#0F1720">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingVertical="18dp"
+        android:paddingHorizontal="20dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/reviewBookTV"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/inter_variablefont_opsz_wght"
+                    android:text="The Maze Runner"
+                    android:textSize="18sp"
+                    android:textColor="#D9E9F7"
+                    android:layout_marginVertical="4dp"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/friendNameTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/inter_variablefont_opsz_wght"
+                        android:text="KDJZoKewl"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:textColor="#D9E9F7" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/friendPfpIv"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginStart="8dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/otherpfp"
+                        tools:src="@drawable/otherpfp"
+                        app:shapeAppearanceOverlay="@style/CircleImage" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center" >
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/star_rating"
+                    android:layout_marginRight="4dp"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/star_rating"
+                    android:layout_marginRight="4dp"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/star_rating"
+                    android:layout_marginRight="4dp"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/star_rating"
+                    android:layout_marginRight="4dp"/>
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/ic_heart"
+                    android:layout_marginRight="4dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/reviewContentTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"
+                android:text="BEST DYSTOPIAN FILM EVER. I wish I can watch this again for the first time!"
+                android:textSize="14sp"
+                android:textColor="#D9E9F7"
+                android:layout_marginVertical="8dp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/reviewBookIV"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:src="@drawable/the_maze_runner"
+            android:scaleType="centerCrop"
+            android:contentDescription="The Maze Runner book cover"
+            android:layout_marginLeft="8dp"/>
+
+    </LinearLayout>
+
+    <!-- Subtle divider line -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="20dp"
+        android:background="#1E2C3A" />
+
+</LinearLayout>
