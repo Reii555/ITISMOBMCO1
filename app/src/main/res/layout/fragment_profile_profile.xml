@@ -1,84 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#0F1720">
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_gravity="center"
-        android:gravity="center_horizontal" >
+        android:background="#0F1720">
 
-        <ImageView
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/profile_nav_icon" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal" >
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/profile_nav_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="\@username"
+                android:textColor="#D9E9F7"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/inter_variablefont_opsz_wght"/>
+
+            <Button
+                android:id="@+id/logoutBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:backgroundTint="#7F3038"
+                android:text="Logout"
+                android:textColor="#FFE4E6"
+                android:textSize="12sp"
+                android:paddingHorizontal="18dp"
+                android:minHeight="0dp"
+                android:minWidth="0dp"
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#2B3A4A"
+            android:layout_marginVertical="32dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="\@username"
+            android:text="Recent Activity"
             android:textColor="#D9E9F7"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:fontFamily="@font/inter_variablefont_opsz_wght"/>
+            android:fontFamily="@font/dmseriftext_regular"
+            android:layout_marginHorizontal="28dp"
+            android:layout_marginBottom="4dp"/>
 
-        <Button
-            android:id="@+id/logoutBtn"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:backgroundTint="#7F3038"
-            android:text="Logout"
-            android:textColor="#FFE4E6"
-            android:textSize="12sp"
-            android:paddingHorizontal="18dp"
-            android:minHeight="0dp"
-            android:minWidth="0dp"
-            android:layout_marginTop="8dp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <!-- recent activity books -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recentActivityRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:clipToPadding="false"
+                android:layout_marginLeft="18dp"/>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#2B3A4A"
-        android:layout_marginVertical="32dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Recent Activity"
-        android:textColor="#D9E9F7"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/dmseriftext_regular"
-        android:layout_marginHorizontal="28dp"
-        android:layout_marginBottom="4dp"/>
+        </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
-
-        <!-- recent activity books -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recentActivityRecyclerView"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="8dp"
-            android:clipToPadding="false"
-            android:layout_marginLeft="18dp"/>
-
+            android:layout_height="1dp"
+            android:background="#2B3A4A"
+            android:layout_marginTop="18dp"/>
 
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#2B3A4A"
-        android:layout_marginTop="18dp"/>
-
-</LinearLayout>
+</ScrollView>
