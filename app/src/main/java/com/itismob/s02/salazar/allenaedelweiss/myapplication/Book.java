@@ -1,6 +1,8 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
-public class Book {
+import java.io.Serializable;
+
+public class Book implements Serializable {
     private String title, author, description, genre;
     private int imageResId, releaseYear, popularity;
     private float rating;
@@ -53,5 +55,4 @@ public class Book {
     public int getImageResId() {
         return imageResId;
     }
-
 }

@@ -1,5 +1,6 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homelistfragment;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,9 +8,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.ListDetailFragment;
 import com.itismob.s02.salazar.allenaedelweiss.myapplication.R;
 import com.itismob.s02.salazar.allenaedelweiss.myapplication.UserList;
 import com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homebookfragment.MyBookRecyclerViewAdapter;
@@ -66,6 +69,23 @@ public class MyListRecyclerViewAdapter extends RecyclerView.Adapter<MyListRecycl
             );
             holder.postersRv.setAdapter(new MyBookRecyclerViewAdapter(userList.getBooks(), false));
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("userList", userList);
+
+            ListDetailFragment fragment = new ListDetailFragment();
+            fragment.setArguments(bundle);
+
+            if (v.getContext() instanceof AppCompatActivity) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                activity.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.homeChildFragment, fragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ListDataGenerator {
@@ -15,7 +16,9 @@ public class ListDataGenerator {
                 R.drawable.otherpfp,
                 "THE ULTIMATE COLLECTION OF GRIPPING DYSTOPIAN NOVELS",
                 "(compiled from WormBoxd top community choices)",
-                books1
+                books1,
+                1420,
+                Arrays.asList("dystopian", "scifi", "masterpieces", "top100")
         ));
 
         List<Book> books2 = BookDataGenerator.getContinueReadingBooks();
@@ -25,7 +28,9 @@ public class ListDataGenerator {
                 R.drawable.otherpfp,
                 "BEST HIGH-STAKES SURVIVAL AND ACTION ADVENTURES",
                 "(thanks to the book club community)",
-                books2
+                books2,
+                890,
+                Arrays.asList("ya", "survival", "action", "favorites")
         ));
 
         return userLists;
@@ -41,7 +46,9 @@ public class ListDataGenerator {
                 R.drawable.otherpfp,
                 "BOOKS THAT KEPT ME UP ALL NIGHT THIS YEAR",
                 "Updated yesterday",
-                books1
+                books1,
+                340,
+                Arrays.asList("2024", "topreads", "favorites")
         ));
 
         List<Book> books2 = BookDataGenerator.getRecentActivityBooks();
@@ -51,7 +58,9 @@ public class ListDataGenerator {
                 R.drawable.otherpfp,
                 "FAST-PACED THRILLERS AND SCI-FI RELEASES",
                 "Curated by Elena",
-                books2
+                books2,
+                512,
+                Arrays.asList("thriller", "scifi", "pageturners")
         ));
 
         return userLists;
