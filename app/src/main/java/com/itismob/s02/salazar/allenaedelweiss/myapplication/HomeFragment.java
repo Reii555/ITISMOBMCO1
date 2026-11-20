@@ -19,9 +19,18 @@ public class HomeFragment extends Fragment {
 
     private TextView tvBooks, tvReviews, tvLists;
     private View underlineBooks, underlineReviews, underlineLists;
+    private static String lastSelectedTab = "Books";
 
     public HomeFragment() {
         super(R.layout.fragment_home);
+    }
+
+    public static HomeFragment newInstance(String initialTab) {
+        HomeFragment fragment = new HomeFragment();
+        Bundle args = new Bundle();
+        args.putString("initial_tab", initialTab);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -48,14 +57,19 @@ public class HomeFragment extends Fragment {
         tabReviews.setOnClickListener(v -> selectTab("Reviews"));
         tabLists.setOnClickListener(v -> selectTab("Lists"));
 
-        // set the default selected tab on startup
-        selectTab("Books");
+        if (getArguments() != null && getArguments().containsKey("initial_tab")) {
+            lastSelectedTab = getArguments().getString("initial_tab", "Books");
+        }
+
+        selectTab(lastSelectedTab);
     }
 
     /**
      * Updates the UI to reflect the currently selected tab.
      */
     private void selectTab(String activeTab) {
+        lastSelectedTab = activeTab;
+
         // reset all tabs to inactive state
         tvBooks.setTextColor(colorInactive);
         tvReviews.setTextColor(colorInactive);

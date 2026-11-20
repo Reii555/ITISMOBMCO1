@@ -49,7 +49,7 @@ public class ReviewDataGenerator {
                 "nameet ni bakla yung idol niya na nasa closet pa",
                 25314,
                 R.drawable.orv1,
-                "KDJZoKewl",
+                "deartheodosia",
                 R.drawable.otherpfp
         ));
 
@@ -60,7 +60,7 @@ public class ReviewDataGenerator {
                 "BEST DYSTOPIAN FILM EVER. I wish I can watch this again for the first time!",
                 1420,
                 R.drawable.the_maze_runner,
-                "abyssalFlame",
+                "deartheodosia",
                 R.drawable.otherpfp
         ));
 
@@ -71,7 +71,7 @@ public class ReviewDataGenerator {
                 "Katniss is such an iconic protagonist. Unputdownable from page 1.",
                 890,
                 R.drawable.the_hunger_games,
-                "closetFanatic",
+                "deartheodosia",
                 R.drawable.otherpfp
         ));
 
@@ -121,5 +121,36 @@ public class ReviewDataGenerator {
         Collections.sort(reviews, (r1, r2) -> Integer.compare(r2.getLikes(), r1.getLikes()));
 
         return reviews;
+    }
+
+    public static List<Review> getReviewsForBook(String bookTitle) {
+        List<Review> allReviews = new ArrayList<>();
+        allReviews.addAll(getFriendsReviews());
+        allReviews.addAll(getPopularReviews());
+        allReviews.addAll(getRecentReviews());
+
+        List<Review> filtered = new ArrayList<>();
+        if (bookTitle != null && !bookTitle.trim().isEmpty()) {
+            String query = bookTitle.toLowerCase().replaceAll("\\(.*?\\)", "").trim();
+
+            for (Review review : allReviews) {
+                if (review.getBookTitle() != null) {
+                    String reviewTitle = review.getBookTitle().toLowerCase().trim();
+                    if (reviewTitle.contains(query) || query.contains(reviewTitle)) {
+                        boolean isDuplicate = false;
+                        for (Review existing : filtered) {
+                            if (existing.getContent() != null && existing.getContent().equals(review.getContent())) {
+                                isDuplicate = true;
+                                break;
+                            }
+                        }
+                        if (!isDuplicate) {
+                            filtered.add(review);
+                        }
+                    }
+                }
+            }
+        }
+        return filtered;
     }
 }

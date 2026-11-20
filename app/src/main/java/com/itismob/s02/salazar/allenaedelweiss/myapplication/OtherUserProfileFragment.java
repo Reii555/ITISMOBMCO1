@@ -1,5 +1,7 @@
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +36,15 @@ public class OtherUserProfileFragment extends Fragment {
         super(R.layout.fragment_otheruser_profile);
     }
 
+    public static OtherUserProfileFragment newInstance(String username, int avatarRes) {
+        OtherUserProfileFragment fragment = new OtherUserProfileFragment();
+        Bundle args = new Bundle();
+        args.putString("username", username);
+        args.putInt("avatarRes", avatarRes);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -38,12 +52,33 @@ public class OtherUserProfileFragment extends Fragment {
         // back button
         ImageButton btnBack = view.findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
-            if (getActivity() instanceof HomeActivity) {
+            if (getParentFragmentManager().getBackStackEntryCount() > 0) {
+                getParentFragmentManager().popBackStack();
+            } else if (getActivity() instanceof HomeActivity) {
                 ((HomeActivity) getActivity()).navigateFragment(new HomeFragment());
             } else if (getActivity() != null) {
                 getActivity().onBackPressed();
             }
         });
+
+        TextView tvUsername = view.findViewById(R.id.tvUsername);
+        ShapeableImageView ivProfilePic = view.findViewById(R.id.ivProfilePic);
+
+        if (getArguments() != null) {
+            String username = getArguments().getString("username");
+            int avatarRes = getArguments().getInt("avatarRes", 0);
+
+            if (username != null && tvUsername != null) {
+                if (!username.startsWith("@")) {
+                    tvUsername.setText("@" + username);
+                } else {
+                    tvUsername.setText(username);
+                }
+            }
+            if (avatarRes != 0 && ivProfilePic != null) {
+                ivProfilePic.setImageResource(avatarRes);
+            }
+        }
 
         // follow toggle
         Button btnFollow = view.findViewById(R.id.btnFollow);
@@ -51,14 +86,14 @@ public class OtherUserProfileFragment extends Fragment {
             if (btnFollow.getText().toString().equalsIgnoreCase("Follow")) {
                 btnFollow.setText("Following");
                 btnFollow.setBackgroundTintList(
-                        android.content.res.ColorStateList.valueOf(
-                                android.graphics.Color.parseColor("#5B7C99")));
+                        ColorStateList.valueOf(
+                                Color.parseColor("#5B7C99")));
                 Toast.makeText(getContext(), "You are now following this user", Toast.LENGTH_SHORT).show();
             } else {
                 btnFollow.setText("Follow");
                 btnFollow.setBackgroundTintList(
-                        android.content.res.ColorStateList.valueOf(
-                                android.graphics.Color.parseColor("#243B53")));
+                        ColorStateList.valueOf(
+                                Color.parseColor("#243B53")));
                 Toast.makeText(getContext(), "Unfollowed", Toast.LENGTH_SHORT).show();
             }
         });
@@ -188,7 +223,7 @@ public class OtherUserProfileFragment extends Fragment {
 
         static class VH extends RecyclerView.ViewHolder {
             TextView username, review, likeCount;
-            android.widget.RatingBar rating;
+            RatingBar rating;
 
             VH(@NonNull View v) {
                 super(v);

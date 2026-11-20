@@ -73,13 +73,17 @@ public class HomeActivity extends AppCompatActivity {
 
 
     }
-    void navigateFragment(Fragment fragment) {
+    public void navigateFragment(Fragment fragment) {
+        navigateFragment(fragment, false);
+    }
+
+    public void navigateFragment(Fragment fragment, boolean addToBackStack) {
         FragmentManager fragmentManager = getSupportFragmentManager();
-
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
         fragmentTransaction.replace(R.id.homeFragment, fragment);
-
+        if (addToBackStack) {
+            fragmentTransaction.addToBackStack(null);
+        }
         fragmentTransaction.commit();
     }
 

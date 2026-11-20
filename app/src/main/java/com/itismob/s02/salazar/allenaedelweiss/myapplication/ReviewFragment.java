@@ -5,7 +5,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ReviewFragment extends Fragment {
 
-    private Button backBtn;
+    private ImageButton backBtn;
     private Button followBtn;
     private ImageView likeBtnIv;
     private TextView likeCountTv;
@@ -32,6 +34,22 @@ public class ReviewFragment extends Fragment {
         super(R.layout.fragment_review);
     }
 
+    public static ReviewFragment newInstance(Review review) {
+        ReviewFragment fragment = new ReviewFragment();
+        if (review != null) {
+            Bundle args = new Bundle();
+            args.putString("book_title", review.getBookTitle());
+            args.putString("date", review.getDate());
+            args.putFloat("rating", review.getRating());
+            args.putString("content", review.getContent());
+            args.putInt("likes", review.getLikes());
+            args.putInt("book_cover_res", review.getBookImage());
+            args.putString("friend_name", review.getFriendName());
+            fragment.setArguments(args);
+        }
+        return fragment;
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -44,12 +62,49 @@ public class ReviewFragment extends Fragment {
         commentsRv = view.findViewById(R.id.commentsRv);
         noCommentsTv = view.findViewById(R.id.noCommentsTv);
 
+        TextView reviewByUsernameTv = view.findViewById(R.id.reviewByUsernameTv);
+        TextView bookTitleTv = view.findViewById(R.id.bookTitleTv);
+        TextView reviewDateTv = view.findViewById(R.id.reviewDateTv);
+        TextView reviewCommentTv = view.findViewById(R.id.reviewCommentTv);
+        RatingBar bookRatingBar = view.findViewById(R.id.bookRatingBar);
+        ImageView bookCoverIv = view.findViewById(R.id.bookCoverIv);
+
+        if (getArguments() != null) {
+            String title = getArguments().getString("book_title");
+            String date = getArguments().getString("date");
+            float rating = getArguments().getFloat("rating", 0f);
+            String content = getArguments().getString("content");
+            int likes = getArguments().getInt("likes", 142);
+            int coverRes = getArguments().getInt("book_cover_res", 0);
+            String friendName = getArguments().getString("friend_name");
+
+            if (friendName != null && reviewByUsernameTv != null) {
+                reviewByUsernameTv.setText("Review by @" + friendName);
+            }
+
+            if (reviewByUsernameTv != null) {
+                reviewByUsernameTv.setOnClickListener(v -> {
+                    String authorName = friendName != null ? friendName : "deartheodosia";
+                    if (getActivity() instanceof HomeActivity) {
+                        ((HomeActivity) getActivity()).navigateFragment(OtherUserProfileFragment.newInstance(authorName, R.drawable.otherpfp), true);
+                    }
+                });
+            }
+            if (title != null && bookTitleTv != null) bookTitleTv.setText(title);
+            if (date != null && reviewDateTv != null) reviewDateTv.setText("Read on " + date);
+            if (content != null && reviewCommentTv != null) reviewCommentTv.setText(content);
+            if (likes > 0) {
+                likeCount = likes;
+                if (likeCountTv != null) likeCountTv.setText(String.format("%,d likes", likes));
+            }
+            if (bookRatingBar != null && rating > 0) bookRatingBar.setRating(rating);
+            if (coverRes != 0 && bookCoverIv != null) bookCoverIv.setImageResource(coverRes);
+        }
+
         // Back button navigation
         if (backBtn != null) {
             backBtn.setOnClickListener(v -> {
-                if (getParentFragmentManager().getBackStackEntryCount() > 0) {
-                    getParentFragmentManager().popBackStack();
-                } else if (getActivity() != null) {
+                if (getActivity() != null) {
                     getActivity().getOnBackPressedDispatcher().onBackPressed();
                 }
             });

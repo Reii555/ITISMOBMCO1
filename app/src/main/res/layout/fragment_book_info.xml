@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,14 +14,16 @@
         android:paddingBottom="25dp">
 
         <!-- Back Button -->
-        <Button
+        <ImageButton
             android:id="@+id/backBtn"
-            android:layout_width="55dp"
-            android:layout_height="45dp"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:text="&lt;"
-            android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="12dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:src="@android:drawable/ic_media_previous"
+            app:tint="#D9E9F7" />
 
         <!-- Book Cover and Details -->
         <LinearLayout
@@ -157,6 +160,45 @@
             android:text="Popularity:"
             android:textColor="#AAB4C3"
             android:textSize="14sp" />
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="18dp"
+            android:background="#2A3748" />
+
+        <!-- Reviews -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="Reviews"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBookReviews"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/item_book_review" />
+
+        <TextView
+            android:id="@+id/noReviewsTv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="10dp"
+            android:text="No reviews yet for this book."
+            android:textColor="#AAB4C3"
+            android:textSize="14sp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

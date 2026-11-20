@@ -1,16 +1,20 @@
-
 package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homereviewfragment.MyReviewRecyclerViewAdapter;
+
+import java.util.List;
 import java.util.Locale;
 
 public class BookInformationFragment extends Fragment {
@@ -26,7 +30,7 @@ public class BookInformationFragment extends Fragment {
 
     // Book cover and back button
     private ImageView bookCoverIv;
-    private Button backBtn;
+    private ImageButton backBtn;
 
     public BookInformationFragment() {
         super(R.layout.fragment_book_info);
@@ -50,6 +54,9 @@ public class BookInformationFragment extends Fragment {
 
         bookCoverIv = view.findViewById(R.id.bookCoverIv);
         backBtn = view.findViewById(R.id.backBtn);
+
+        RecyclerView rvBookReviews = view.findViewById(R.id.rvBookReviews);
+        TextView noReviewsTv = view.findViewById(R.id.noReviewsTv);
 
         // Retrieve selected book information
         Bundle args = getArguments();
@@ -93,11 +100,37 @@ public class BookInformationFragment extends Fragment {
             if (imageResId != 0) {
                 bookCoverIv.setImageResource(imageResId);
             }
+
+            // Display reviews specific to this book
+            List<Review> bookReviews = ReviewDataGenerator.getReviewsForBook(title);
+            if (bookReviews.isEmpty()) {
+                if (noReviewsTv != null) noReviewsTv.setVisibility(View.VISIBLE);
+                if (rvBookReviews != null) rvBookReviews.setVisibility(View.GONE);
+            } else {
+                if (noReviewsTv != null) noReviewsTv.setVisibility(View.GONE);
+                if (rvBookReviews != null) {
+                    rvBookReviews.setVisibility(View.VISIBLE);
+                    rvBookReviews.setLayoutManager(new LinearLayoutManager(getContext()));
+                    rvBookReviews.setNestedScrollingEnabled(false);
+                    rvBookReviews.setAdapter(new MyReviewRecyclerViewAdapter(bookReviews, R.layout.item_book_review, review -> {
+                        int containerId = getId() != 0 ? getId() : R.id.homeFragment;
+                        getParentFragmentManager()
+                                .beginTransaction()
+                                .replace(containerId, ReviewFragment.newInstance(review))
+                                .addToBackStack(null)
+                                .commit();
+                    }));
+                }
+            }
         }
 
         // Back button functionality
         backBtn.setOnClickListener(v -> {
-            getParentFragmentManager().popBackStack();
+            if (getParentFragmentManager().getBackStackEntryCount() > 0) {
+                getParentFragmentManager().popBackStack();
+            } else if (getActivity() != null) {
+                getActivity().getOnBackPressedDispatcher().onBackPressed();
+            }
         });
     }
 }

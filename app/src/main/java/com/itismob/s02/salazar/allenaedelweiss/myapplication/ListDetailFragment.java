@@ -138,10 +138,14 @@ public class ListDetailFragment extends Fragment {
         BookInformationFragment fragment = new BookInformationFragment();
         fragment.setArguments(bundle);
 
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(R.id.homeChildFragment, fragment)
-                .addToBackStack(null)
-                .commit();
+        if (getActivity() instanceof HomeActivity) {
+            ((HomeActivity) getActivity()).navigateFragment(fragment, true);
+        } else {
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.homeChildFragment, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 }

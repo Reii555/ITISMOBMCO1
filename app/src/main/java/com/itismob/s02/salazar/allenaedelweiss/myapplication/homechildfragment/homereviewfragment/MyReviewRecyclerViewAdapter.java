@@ -16,16 +16,26 @@ import java.util.List;
 
 public class MyReviewRecyclerViewAdapter extends RecyclerView.Adapter<MyReviewRecyclerViewAdapter.ViewHolder> {
 
+    public interface OnReviewClickListener {
+        void onReviewClick(Review review);
+    }
+
     private final List<Review> items;
     private final int layoutResId;
+    private final OnReviewClickListener listener;
 
     public MyReviewRecyclerViewAdapter(List<Review> items) {
-        this(items, R.layout.item_review);
+        this(items, R.layout.item_review, null);
     }
 
     public MyReviewRecyclerViewAdapter(List<Review> items, int layoutResId) {
+        this(items, layoutResId, null);
+    }
+
+    public MyReviewRecyclerViewAdapter(List<Review> items, int layoutResId, OnReviewClickListener listener) {
         this.items = items;
         this.layoutResId = layoutResId;
+        this.listener = listener;
     }
 
     @NonNull
@@ -62,6 +72,12 @@ public class MyReviewRecyclerViewAdapter extends RecyclerView.Adapter<MyReviewRe
         if (holder.friendPfpIv != null && item.getFriendPfp() != 0) {
             holder.friendPfpIv.setImageResource(item.getFriendPfp());
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onReviewClick(item);
+            }
+        });
     }
 
     @Override

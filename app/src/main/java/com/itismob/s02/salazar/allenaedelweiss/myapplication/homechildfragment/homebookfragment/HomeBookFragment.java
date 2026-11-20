@@ -1,6 +1,7 @@
 
 package com.itismob.s02.salazar.allenaedelweiss.myapplication.homechildfragment.homebookfragment;
 
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.HomeActivity;
 import com.itismob.s02.salazar.allenaedelweiss.myapplication.R;
 
 import android.os.Bundle;
@@ -158,10 +159,14 @@ public class HomeBookFragment extends Fragment {
 
         fragment.setArguments(bundle);
 
-        getParentFragmentManager()
-                .beginTransaction()
-                .replace(R.id.homeChildFragment, fragment)
-                .addToBackStack(null)
-                .commit();
+        if (getActivity() instanceof HomeActivity) {
+            ((HomeActivity) getActivity()).navigateFragment(fragment, true);
+        } else {
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.homeChildFragment, fragment)
+                    .addToBackStack(null)
+                    .commit();
+        }
     }
 }

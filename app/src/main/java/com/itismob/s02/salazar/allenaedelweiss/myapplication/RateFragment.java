@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class RateFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Button backBtn = view.findViewById(R.id.backBtn);
+        ImageButton backBtn = view.findViewById(R.id.backBtn);
         TextView bookTitleTv = view.findViewById(R.id.bookTitleTv);
         TextView bookAuthorTv = view.findViewById(R.id.bookAuthorTv);
         TextView bookSummaryTv = view.findViewById(R.id.bookSummaryTv);

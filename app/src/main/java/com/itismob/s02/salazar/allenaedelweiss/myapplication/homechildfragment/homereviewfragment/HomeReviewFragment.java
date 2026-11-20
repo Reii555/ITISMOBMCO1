@@ -13,9 +13,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.HomeActivity;
 import com.itismob.s02.salazar.allenaedelweiss.myapplication.R;
 import com.itismob.s02.salazar.allenaedelweiss.myapplication.Review;
 import com.itismob.s02.salazar.allenaedelweiss.myapplication.ReviewDataGenerator;
+import com.itismob.s02.salazar.allenaedelweiss.myapplication.ReviewFragment;
 
 import java.util.List;
 
@@ -48,13 +50,21 @@ public class HomeReviewFragment extends Fragment {
         if (rvFriends != null) {
             rvFriends.setLayoutManager(new LinearLayoutManager(getContext()));
             rvFriends.setNestedScrollingEnabled(false);
-            rvFriends.setAdapter(new MyReviewRecyclerViewAdapter(friendReviews, R.layout.item_review_newfromfriends));
+            rvFriends.setAdapter(new MyReviewRecyclerViewAdapter(friendReviews, R.layout.item_review_newfromfriends, review -> {
+                if (getActivity() instanceof HomeActivity) {
+                    ((HomeActivity) getActivity()).navigateFragment(ReviewFragment.newInstance(review), true);
+                }
+            }));
         }
 
         if (rvPopular != null) {
             rvPopular.setLayoutManager(new LinearLayoutManager(getContext()));
             rvPopular.setNestedScrollingEnabled(false);
-            rvPopular.setAdapter(new MyReviewRecyclerViewAdapter(popularReviews, R.layout.item_review_popular));
+            rvPopular.setAdapter(new MyReviewRecyclerViewAdapter(popularReviews, R.layout.item_review_popular, review -> {
+                if (getActivity() instanceof HomeActivity) {
+                    ((HomeActivity) getActivity()).navigateFragment(ReviewFragment.newInstance(review), true);
+                }
+            }));
         }
 
         NestedScrollView scrollView = view.findViewById(R.id.homeReviewScrollView);
