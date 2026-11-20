@@ -7,6 +7,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     android:padding="8dp"
     android:background="#0F1720">
 
@@ -14,8 +15,10 @@
         android:id="@+id/bookCoverIV"
         android:layout_width="88dp"
         android:layout_height="130dp"
+        android:layout_gravity="center_horizontal"
         android:contentDescription="Book cover"
-        android:scaleType="centerCrop"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
         android:src="@drawable/the_maze_runner" />
 
     <TextView

@@ -51,6 +51,7 @@ public class RateFragment extends Fragment {
         reviewEt = view.findViewById(R.id.reviewEt);
         Button cancelReviewBtn = view.findViewById(R.id.cancelReviewBtn);
         Button submitReviewBtn = view.findViewById(R.id.submitReviewBtn);
+        Button markContBtn = view.findViewById(R.id.markContBtn);
 
         // Populate dynamic book details if passed via arguments
         if (getArguments() != null) {
@@ -76,6 +77,21 @@ public class RateFragment extends Fragment {
         if (cancelReviewBtn != null) {
             cancelReviewBtn.setOnClickListener(v -> navigateBack());
         }
+
+
+        // Mark as Continue Reading button
+        if (markContBtn != null) {
+            markContBtn.setOnClickListener(v -> {
+                Toast.makeText(
+                        requireContext(),
+                        "Marked as Continue Reading (can be viewed in My Activity)",
+                        Toast.LENGTH_LONG
+                ).show();
+
+                navigateBack();
+            });
+        }
+
 
         // Submit review button click listener
         if (submitReviewBtn != null) {

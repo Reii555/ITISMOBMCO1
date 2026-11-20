@@ -37,9 +37,22 @@ public class ProfileProfileFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        RecyclerView continueReading = view.findViewById(R.id.recentActivityRecyclerView);
-        continueReading.setLayoutManager(new GridLayoutManager(requireContext(), 4));
-        continueReading.setAdapter(new BookAdapter(BookDataGenerator.getRecentActivityBooks()));
+
+        RecyclerView continueReading = view.findViewById(
+                R.id.recentActivityRecyclerView
+        );
+
+        continueReading.setLayoutManager(
+                new GridLayoutManager(requireContext(), 4)
+        );
+
+        continueReading.setAdapter(
+                new BookAdapter(
+                        BookDataGenerator.getRecentActivityBooks(),
+                        book -> openBookInfo(book)
+                )
+        );
+
 
         // LOGOUT
         Button logoutBtn = view.findViewById(R.id.logoutBtn);
@@ -68,5 +81,31 @@ public class ProfileProfileFragment extends Fragment {
             requireActivity().finish();
         });
     }
+
+
+    private void openBookInfo(Book book) {
+
+        Bundle bundle = new Bundle();
+
+        bundle.putString("title", book.getTitle());
+        bundle.putString("author", book.getAuthor());
+        bundle.putString("description", book.getDescription());
+        bundle.putString("genre", book.getGenre());
+
+        bundle.putInt("releaseYear", book.getReleaseYear());
+        bundle.putInt("popularity", book.getPopularity());
+        bundle.putFloat("rating", book.getRating());
+        bundle.putInt("imageResId", book.getImageResId());
+
+        BookInformationFragment fragment = new BookInformationFragment();
+        fragment.setArguments(bundle);
+
+        getParentFragmentManager()
+                .beginTransaction()
+                .replace(R.id.profileChildFragment, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
 
 }

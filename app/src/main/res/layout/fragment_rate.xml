@@ -84,6 +84,19 @@
         android:text="yes"
         android:textColor="@color/white"/>
 
+    <Button
+        android:id="@+id/markContBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:backgroundTint="#1E2C3A"
+        android:text="Mark as Continue Reading"
+        android:textColor="@color/white"
+        app:cornerRadius="8dp"
+        app:strokeColor="#2A3748"
+        app:strokeWidth="1dp"
+        android:layout_marginTop="18dp"/>
+
     <!-- visual divider -->
     <View
         android:layout_width="match_parent"
@@ -184,5 +197,6 @@
             app:strokeWidth="1dp" />
 
     </LinearLayout>
+
 
 </LinearLayout>

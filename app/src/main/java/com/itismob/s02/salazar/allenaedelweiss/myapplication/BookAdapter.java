@@ -15,9 +15,22 @@ import java.util.List;
 public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder> {
 
     private final List<Book> books;
+    private final OnBookClickListener listener;
 
-    public BookAdapter(List<Book> books) {
+    // Click listener
+    public interface OnBookClickListener {
+        void onBookClick(Book book);
+    }
+
+    // Constructor with click listener
+    public BookAdapter(List<Book> books, OnBookClickListener listener) {
         this.books = books;
+        this.listener = listener;
+    }
+
+    // Original constructor for other screens
+    public BookAdapter(List<Book> books) {
+        this(books, null);
     }
 
     @NonNull
@@ -40,6 +53,13 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
         holder.title.setText(book.getTitle());
         holder.author.setText(book.getAuthor());
         holder.cover.setImageResource(book.getImageResId());
+
+        // Book click
+        holder.itemView.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onBookClick(book);
+            }
+        });
     }
 
     @Override
@@ -48,6 +68,7 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
     }
 
     static class BookViewHolder extends RecyclerView.ViewHolder {
+
         ImageView cover;
         TextView title, author;
 
