@@ -3,7 +3,9 @@ package com.itismob.s02.salazar.allenaedelweiss.myapplication;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -17,6 +19,9 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ReviewFragment extends Fragment {
 
     private ImageButton backBtn;
@@ -29,6 +34,22 @@ public class ReviewFragment extends Fragment {
     private boolean isFollowing = false;
     private boolean isLiked = false;
     private int likeCount = 142;
+
+    public static class CommentItem {
+        public String username;
+        public float rating;
+        public String comment;
+        public String likeCount;
+        public int avatarRes;
+
+        public CommentItem(String username, float rating, String comment, String likeCount, int avatarRes) {
+            this.username = username;
+            this.rating = rating;
+            this.comment = comment;
+            this.likeCount = likeCount;
+            this.avatarRes = avatarRes;
+        }
+    }
 
     public ReviewFragment() {
         super(R.layout.fragment_review);
@@ -84,9 +105,8 @@ public class ReviewFragment extends Fragment {
 
             if (reviewByUsernameTv != null) {
                 reviewByUsernameTv.setOnClickListener(v -> {
-                    String authorName = friendName != null ? friendName : "deartheodosia";
                     if (getActivity() instanceof HomeActivity) {
-                        ((HomeActivity) getActivity()).navigateFragment(OtherUserProfileFragment.newInstance(authorName, R.drawable.otherpfp), true);
+                        ((HomeActivity) getActivity()).navigateFragment(new OtherUserProfileFragment(), true);
                     }
                 });
             }
@@ -144,9 +164,60 @@ public class ReviewFragment extends Fragment {
             });
         }
 
-        // Setup Comments RecyclerView LayoutManager
+        // Setup Comments RecyclerView with sample comments
+        List<CommentItem> commentList = new ArrayList<>();
+        commentList.add(new CommentItem("@deartheodosia", 4.5f, "they gay fr", "142 likes", R.drawable.otherpfp));
+        commentList.add(new CommentItem("@deartheodosia", 5.0f, "THIS CHAPTER WAS CRAZY! Best scene by far.", "89 likes", R.drawable.otherpfp));
+
         if (commentsRv != null) {
             commentsRv.setLayoutManager(new LinearLayoutManager(getContext()));
+            commentsRv.setNestedScrollingEnabled(false);
+            commentsRv.setAdapter(new CommentAdapter(commentList));
+        }
+    }
+
+    static class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.VH> {
+        private final List<CommentItem> items;
+
+        CommentAdapter(List<CommentItem> items) {
+            this.items = items;
+        }
+
+        static class VH extends RecyclerView.ViewHolder {
+            TextView username, comment, likeCount;
+            RatingBar rating;
+            ImageView avatar;
+
+            VH(@NonNull View v) {
+                super(v);
+                username = v.findViewById(R.id.commentUsernameTv);
+                comment = v.findViewById(R.id.commentReviewTv);
+                likeCount = v.findViewById(R.id.likeCountCommentTv);
+                rating = v.findViewById(R.id.commentRating);
+                avatar = v.findViewById(R.id.commentUserAvatarIv);
+            }
+        }
+
+        @NonNull
+        @Override
+        public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_comment, parent, false);
+            return new VH(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull VH h, int pos) {
+            CommentItem item = items.get(pos);
+            if (h.username != null) h.username.setText(item.username);
+            if (h.comment != null) h.comment.setText(item.comment);
+            if (h.likeCount != null) h.likeCount.setText(item.likeCount);
+            if (h.rating != null) h.rating.setRating(item.rating);
+            if (h.avatar != null && item.avatarRes != 0) h.avatar.setImageResource(item.avatarRes);
+        }
+
+        @Override
+        public int getItemCount() {
+            return items.size();
         }
     }
 }

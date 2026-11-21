@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:paddingStart="5dp"
                 android:textColor="@color/white"
-                tools:text="\@abyssalFlame" />
+                tools:text="\@deartheodosia" />
 
             <RatingBar
                 android:id="@+id/commentRating"

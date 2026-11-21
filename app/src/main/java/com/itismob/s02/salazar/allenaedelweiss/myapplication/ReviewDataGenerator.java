@@ -15,7 +15,9 @@ public class ReviewDataGenerator {
                 4.8F,
                 "BEST DYSTOPIAN FILM EVER. I wish I can watch this again for the first time",
                 25314,
-                R.drawable.the_maze_runner
+                R.drawable.the_maze_runner,
+                "deartheodosia",
+                R.drawable.otherpfp
         ));
 
         reviews.add(new Review(
@@ -24,7 +26,9 @@ public class ReviewDataGenerator {
                 4.9F,
                 "mama i'm scared of zombies",
                 18250,
-                R.drawable.the_scorch_trials
+                R.drawable.the_scorch_trials,
+                "deartheodosia",
+                R.drawable.otherpfp
         ));
 
         reviews.add(new Review(
@@ -33,7 +37,9 @@ public class ReviewDataGenerator {
                 4.8F,
                 "I love this trilogy so much but I lowk cried",
                 7650,
-                R.drawable.the_death_cure
+                R.drawable.the_death_cure,
+                "deartheodosia",
+                R.drawable.otherpfp
         ));
 
         return reviews;
@@ -75,6 +81,28 @@ public class ReviewDataGenerator {
                 R.drawable.otherpfp
         ));
 
+        reviews.add(new Review(
+                "September 20, 2026",
+                "The Scorch Trials",
+                4.9F,
+                "mama i'm scared of zombies",
+                18250,
+                R.drawable.the_scorch_trials,
+                "deartheodosia",
+                R.drawable.otherpfp
+        ));
+
+        reviews.add(new Review(
+                "September 5, 2026",
+                "The Death Cure",
+                4.8F,
+                "I love this trilogy so much but I lowk cried",
+                7650,
+                R.drawable.the_death_cure,
+                "deartheodosia",
+                R.drawable.otherpfp
+        ));
+
         return reviews;
     }
 
@@ -87,7 +115,9 @@ public class ReviewDataGenerator {
                 4.8F,
                 "BEST DYSTOPIAN FILM EVER. I wish I can watch this again for the first time!",
                 35314,
-                R.drawable.the_maze_runner
+                R.drawable.the_maze_runner,
+                "deartheodosia",
+                R.drawable.otherpfp
         ));
 
         reviews.add(new Review(
@@ -96,7 +126,9 @@ public class ReviewDataGenerator {
                 4.8F,
                 "nameet ni bakla yung idol niya na nasa closet pa",
                 25314,
-                R.drawable.orv1
+                R.drawable.orv1,
+                "deartheodosia",
+                R.drawable.otherpfp
         ));
 
         reviews.add(new Review(
@@ -105,7 +137,9 @@ public class ReviewDataGenerator {
                 4.9F,
                 "mama i'm scared of zombies",
                 18250,
-                R.drawable.the_scorch_trials
+                R.drawable.the_scorch_trials,
+                "deartheodosia",
+                R.drawable.otherpfp
         ));
 
         reviews.add(new Review(
@@ -114,7 +148,9 @@ public class ReviewDataGenerator {
                 4.8F,
                 "I love this trilogy so much but I lowk cried",
                 7650,
-                R.drawable.the_death_cure
+                R.drawable.the_death_cure,
+                "deartheodosia",
+                R.drawable.otherpfp
         ));
 
         // Sort by number of likes in descending order (highest likes = most popular)

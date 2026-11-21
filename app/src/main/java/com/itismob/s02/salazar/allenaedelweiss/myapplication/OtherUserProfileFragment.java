@@ -19,8 +19,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.imageview.ShapeableImageView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,15 +34,6 @@ public class OtherUserProfileFragment extends Fragment {
         super(R.layout.fragment_otheruser_profile);
     }
 
-    public static OtherUserProfileFragment newInstance(String username, int avatarRes) {
-        OtherUserProfileFragment fragment = new OtherUserProfileFragment();
-        Bundle args = new Bundle();
-        args.putString("username", username);
-        args.putInt("avatarRes", avatarRes);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -52,33 +41,12 @@ public class OtherUserProfileFragment extends Fragment {
         // back button
         ImageButton btnBack = view.findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> {
-            if (getParentFragmentManager().getBackStackEntryCount() > 0) {
-                getParentFragmentManager().popBackStack();
-            } else if (getActivity() instanceof HomeActivity) {
+            if (getActivity() instanceof HomeActivity) {
                 ((HomeActivity) getActivity()).navigateFragment(new HomeFragment());
             } else if (getActivity() != null) {
                 getActivity().onBackPressed();
             }
         });
-
-        TextView tvUsername = view.findViewById(R.id.tvUsername);
-        ShapeableImageView ivProfilePic = view.findViewById(R.id.ivProfilePic);
-
-        if (getArguments() != null) {
-            String username = getArguments().getString("username");
-            int avatarRes = getArguments().getInt("avatarRes", 0);
-
-            if (username != null && tvUsername != null) {
-                if (!username.startsWith("@")) {
-                    tvUsername.setText("@" + username);
-                } else {
-                    tvUsername.setText(username);
-                }
-            }
-            if (avatarRes != 0 && ivProfilePic != null) {
-                ivProfilePic.setImageResource(avatarRes);
-            }
-        }
 
         // follow toggle
         Button btnFollow = view.findViewById(R.id.btnFollow);
@@ -108,24 +76,56 @@ public class OtherUserProfileFragment extends Fragment {
         // pass click listener to adapter
         activityAdapter = new RecentActivityAdapter(recentBooks, book -> {
             if (getActivity() instanceof HomeActivity) {
-                // navigate to fragment_rate
-                ((HomeActivity) getActivity()).navigateFragment(new RateFragment());
+                Bundle bundle = new Bundle();
+                bundle.putString("title", book.getTitle());
+                bundle.putString("author", book.getAuthor());
+                bundle.putString("description", book.getDescription());
+                bundle.putString("genre", book.getGenre());
+                bundle.putInt("releaseYear", book.getReleaseYear());
+                bundle.putInt("popularity", book.getPopularity());
+                bundle.putFloat("rating", book.getRating());
+                bundle.putInt("imageResId", book.getImageResId());
+
+                BookInformationFragment fragment = new BookInformationFragment();
+                fragment.setArguments(bundle);
+
+                ((HomeActivity) getActivity()).navigateFragment(fragment, true);
             }
         });
         recentActivityRv.setAdapter(activityAdapter);
 
         // recent reviews
         RecyclerView commentsRv = view.findViewById(R.id.commentsRv);
-        commentsRv.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (commentsRv != null) {
+            commentsRv.setLayoutManager(new LinearLayoutManager(getContext()));
+            commentsRv.setNestedScrollingEnabled(false);
 
-        // pass click listener to adapter
-        reviewsAdapter = new RecentReviewsAdapter(recentReviews, review -> {
-            if (getActivity() instanceof HomeActivity) {
-                // navigate to fragment_review
-                ((HomeActivity) getActivity()).navigateFragment(new ReviewFragment());
+            List<com.itismob.s02.salazar.allenaedelweiss.myapplication.Review> friendsReviews = ReviewDataGenerator.getFriendsReviews();
+            recentReviews.clear();
+            for (com.itismob.s02.salazar.allenaedelweiss.myapplication.Review r : friendsReviews) {
+                recentReviews.add(new Review(
+                        "@" + (r.getFriendName() != null ? r.getFriendName() : "deartheodosia"),
+                        r.getRating(),
+                        r.getContent(),
+                        String.format("%,d likes", r.getLikes())
+                ));
             }
-        });
-        commentsRv.setAdapter(reviewsAdapter);
+
+            // pass click listener to adapter
+            reviewsAdapter = new RecentReviewsAdapter(recentReviews, review -> {
+                if (getActivity() instanceof HomeActivity) {
+                    int index = recentReviews.indexOf(review);
+                    com.itismob.s02.salazar.allenaedelweiss.myapplication.Review targetReview =
+                            (index >= 0 && index < friendsReviews.size()) ? friendsReviews.get(index) : null;
+                    if (targetReview != null) {
+                        ((HomeActivity) getActivity()).navigateFragment(ReviewFragment.newInstance(targetReview), true);
+                    } else {
+                        ((HomeActivity) getActivity()).navigateFragment(new ReviewFragment(), true);
+                    }
+                }
+            });
+            commentsRv.setAdapter(reviewsAdapter);
+        }
     }
 
     // =========================================================
