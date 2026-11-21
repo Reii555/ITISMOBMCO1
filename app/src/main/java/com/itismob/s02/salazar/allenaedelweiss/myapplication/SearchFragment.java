@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private EditText searchInputET;
+    //for add rating to avoid confusion between search tab and add rating
+    private TextView searchTitleTv;
     private LinearLayout optionReleaseDate;
     private LinearLayout optionGenre;
     private LinearLayout optionMostPopular;
@@ -78,6 +81,14 @@ public class SearchFragment extends Fragment {
         optionHighestRated = view.findViewById(R.id.optionHighestRated);
         browseSectionContainer = view.findViewById(R.id.sectionContainerBrowse);
         rvSearchResults = view.findViewById(R.id.searchResultsRV);
+
+        searchTitleTv = view.findViewById(R.id.searchTitleTv);
+
+        if(isForRating){
+            searchTitleTv.setText("Find Books to Rate");
+        } else {
+            searchInputET.setText("Search");
+        }
 
         searchAdapter = new SearchAdapter(new ArrayList<>(), book -> {
             if (isForRating) {
