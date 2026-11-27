@@ -49,7 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/inter_variablefont_opsz_wght"
-                        android:text="deartheodosia"
+                        tools:text="deartheodosia"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:textColor="#D9E9F7" />
@@ -60,7 +60,6 @@
                         android:layout_height="24dp"
                         android:layout_marginStart="8dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/otherpfp"
                         tools:src="@drawable/otherpfp"
                         app:shapeAppearanceOverlay="@style/CircleImage" />
 
